@@ -1,5 +1,6 @@
 package server;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -110,13 +111,24 @@ public class ServerGUI {
 
 
     void appendRoom(String str) {
-        chatArea.appendText(str);
-        chatArea.positionCaret(chatArea.getText().length() - 1);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                chatArea.appendText(str);
+                chatArea.positionCaret(chatArea.getText().length() - 1);
+            }
+        });
     }
 
     void appendEvent(String str) {
-        eventLog.appendText(str);
-        eventLog.positionCaret(eventLog.getText().length() - 1);
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                eventLog.appendText(str);
+                eventLog.positionCaret(eventLog.getText().length() - 1);
+            }
+        });
     }
 
     public Server getServer() {
