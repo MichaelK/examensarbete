@@ -1,6 +1,7 @@
 package client;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -174,7 +175,13 @@ public class SecureChatUI extends Application
 
     // called by the Client to append text in the TextArea
     void append(String str) {
-        chatRoom.appendText(str);
-        chatRoom.positionCaret(chatRoom.getText().length() - 1);
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                chatRoom.appendText(str);
+                chatRoom.positionCaret(chatRoom.getText().length() - 1);
+            }
+        });
     }
 }
