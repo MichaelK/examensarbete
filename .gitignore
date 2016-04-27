@@ -40,3 +40,5 @@ Thumbs.db
 .project
 .settings/
 target/
+ssh laptop
+.pub
