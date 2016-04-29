@@ -209,6 +209,7 @@ public class Server {
                     case ChatMessage.LOGOUT:
                         display(username + " disconnected with a LOGOUT message.");
                         keepGoing = false;
+                        this.close();
                         // TODO: 2016-04-10 remove the clientThread
                         break;
                     case ChatMessage.WHOISIN:
@@ -241,7 +242,7 @@ public class Server {
                     sInput.close();
                 }
             }
-            catch(Exception e) {};
+            catch(Exception e) {}
             try {
                 if(socket != null){
                     socket.close();

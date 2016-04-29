@@ -89,18 +89,27 @@ public class Client {
 
 
     // To send a message to the server
-
     void sendMessage(ChatMessage chatmsg) {
         ChatMessage chatMessage = chatmsg;
         String message = chatMessage.getMessage();
-        String generateMsg = datapackageGenerator.generateDatapackage(message);
-        chatMessage.setMessage(generateMsg);
-
+        switch(chatmsg.getType()){
+            case ChatMessage.MESSAGE:
+                String generateMsg = datapackageGenerator.generateDatapackage(message);
+                chatMessage.setMessage(generateMsg);
+                break;
+            case ChatMessage.LOGOUT:
+                display("Connection is closed!" + "\n");
+                chatMessage.setMessage(message);
+                break;
+            case ChatMessage.WHOISIN:
+                chatMessage.setMessage(message);
+                break;
+        }
         try {
             sOutput.writeObject(chatMessage);
         }
         catch(IOException e) {
-            display("Exception writing to server: " + e);
+            display("Exception writing to server: " + e + "\n");
         }
     }
 
@@ -148,7 +157,7 @@ public class Client {
                     }
                 }
                 catch(IOException e) {
-                    display("Server has close the connection: " + e);
+                    //display("Server has close the connection: " + e);
                 }
                 catch(ClassNotFoundException e) {
                     System.out.println("ClassNotFoundException i ServerListener!");
