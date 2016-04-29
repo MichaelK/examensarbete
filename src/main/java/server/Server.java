@@ -112,7 +112,7 @@ public class Server {
     }
 
     private synchronized void broadcast(ChatMessage chatMessage) {
-        //Show unencrypted message in the ServerGUI
+        //Show undecrypted message in the ServerGUI
         this.serverGUI.appendRoom(chatMessage.getSender() + " : " + chatMessage.getMessage() + "\n");
         // add HH:mm:ss and \n to the message
         String time = simpleDateFormat.format(new Date());
@@ -153,7 +153,7 @@ public class Server {
         int id;
         // the Username of the Client
         String username;
-        // the only type of message a will receive
+        // the only type of message the server will receive
         ChatMessage chatMessage;
         // the date I connect
         String date;
@@ -202,6 +202,7 @@ public class Server {
                 // Switch on the type of message receive
                 switch(chatMessage.getType()) {
                     case ChatMessage.MESSAGE:
+                        chatMessage.setSender(username);
                         broadcast(chatMessage);
                         //broadcast(username + ": " + message);
                         break;

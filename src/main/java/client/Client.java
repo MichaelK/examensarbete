@@ -41,7 +41,6 @@ public class Client {
         try {
             socket = new Socket(server, port);
         }
-        // if it failed not much I can so
         catch(Exception e) {
             display("Error connecting to server:" + e);
             return false;
@@ -85,7 +84,7 @@ public class Client {
         if(secureChatUI == null)
             System.out.println("display secureChatUI == null");      // println in console mode
         else
-            secureChatUI.append(msg + "\n");      // append to the ClientGUI TextArea
+            secureChatUI.append(msg);      // append to the ClientGUI TextArea
     }
 
 
