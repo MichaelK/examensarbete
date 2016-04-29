@@ -46,7 +46,7 @@ public class Client {
             return false;
         }
 
-        String msg = "Connection accepted " + socket.getInetAddress() + ":" + socket.getPort();
+        String msg = "Connection accepted " + socket.getInetAddress() + ":" + socket.getPort() + "\n";
         System.out.println(msg);
         display(msg);
 
@@ -141,7 +141,7 @@ public class Client {
                         ChatMessage chatMessage = (ChatMessage) obj;
                         String msg = chatMessage.getMessage();
                         String openMsg = datapackageGenerator.openDatapackage(msg);
-                        secureChatUI.append(openMsg);
+                        secureChatUI.append(openMsg + "\n");
                     }else if (obj.getClass().equals(String.class)){
                         String msg = (String) obj;
                         secureChatUI.append(msg);

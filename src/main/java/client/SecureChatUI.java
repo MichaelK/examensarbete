@@ -179,7 +179,7 @@ public class SecureChatUI extends Application
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                chatRoom.appendText(str + "\n");
+                chatRoom.appendText(str);
                 chatRoom.positionCaret(chatRoom.getText().length() - 1);
             }
         });
