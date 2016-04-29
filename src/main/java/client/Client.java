@@ -1,10 +1,11 @@
 package client;
 
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import services.datapackage.DatapackageGenerator;
 import services.datapackage.DatapackageGeneratorImpl;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 /**
@@ -109,7 +110,7 @@ public class Client {
             sOutput.writeObject(chatMessage);
         }
         catch(IOException e) {
-            display("Exception writing to server: " + e + "\n");
+            display("Exception sending message to server: " + e + "\n");
         }
     }
 
