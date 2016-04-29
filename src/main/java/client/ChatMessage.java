@@ -46,5 +46,6 @@ public class ChatMessage implements Serializable {
         this.message = message;
     }
     public String getSender() { return this.sender;}
+    public void setSender(String sender){this.sender = sender;}
 
 }

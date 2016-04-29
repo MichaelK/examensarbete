@@ -1,10 +1,11 @@
 package client;
 
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import services.datapackage.DatapackageGenerator;
 import services.datapackage.DatapackageGeneratorImpl;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 /**
@@ -41,13 +42,12 @@ public class Client {
         try {
             socket = new Socket(server, port);
         }
-        // if it failed not much I can so
         catch(Exception e) {
             display("Error connecting to server:" + e);
             return false;
         }
 
-        String msg = "Connection accepted " + socket.getInetAddress() + ":" + socket.getPort();
+        String msg = "Connection accepted " + socket.getInetAddress() + ":" + socket.getPort() + "\n";
         System.out.println(msg);
         display(msg);
 
@@ -85,23 +85,32 @@ public class Client {
         if(secureChatUI == null)
             System.out.println("display secureChatUI == null");      // println in console mode
         else
-            secureChatUI.append(msg + "\n");      // append to the ClientGUI TextArea
+            secureChatUI.append(msg);      // append to the ClientGUI TextArea
     }
 
 
     // To send a message to the server
-
     void sendMessage(ChatMessage chatmsg) {
         ChatMessage chatMessage = chatmsg;
         String message = chatMessage.getMessage();
-        String generateMsg = datapackageGenerator.generateDatapackage(message);
-        chatMessage.setMessage(generateMsg);
-
+        switch(chatmsg.getType()){
+            case ChatMessage.MESSAGE:
+                String generateMsg = datapackageGenerator.generateDatapackage(message);
+                chatMessage.setMessage(generateMsg);
+                break;
+            case ChatMessage.LOGOUT:
+                display("Connection is closed!" + "\n");
+                chatMessage.setMessage(message);
+                break;
+            case ChatMessage.WHOISIN:
+                chatMessage.setMessage(message);
+                break;
+        }
         try {
             sOutput.writeObject(chatMessage);
         }
         catch(IOException e) {
-            display("Exception writing to server: " + e);
+            display("Exception sending message to server: " + e + "\n");
         }
     }
 
@@ -142,14 +151,14 @@ public class Client {
                         ChatMessage chatMessage = (ChatMessage) obj;
                         String msg = chatMessage.getMessage();
                         String openMsg = datapackageGenerator.openDatapackage(msg);
-                        secureChatUI.append(openMsg);
+                        secureChatUI.append(openMsg + "\n");
                     }else if (obj.getClass().equals(String.class)){
                         String msg = (String) obj;
                         secureChatUI.append(msg);
                     }
                 }
                 catch(IOException e) {
-                    display("Server has close the connection: " + e);
+                    //display("Server has close the connection: " + e);
                 }
                 catch(ClassNotFoundException e) {
                     System.out.println("ClassNotFoundException i ServerListener!");

@@ -121,7 +121,6 @@ public class ServerGUI {
     }
 
     void appendEvent(String str) {
-
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
