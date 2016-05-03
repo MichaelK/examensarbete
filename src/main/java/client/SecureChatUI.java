@@ -81,6 +81,7 @@ public class SecureChatUI extends Application
         });
 
         final Button sendButton = new Button("Send");
+        //sendButton.defaultButtonProperty().bind(sendButton.focusedProperty());
         sendButton.setOnAction((event) -> {
             ChatMessage message = new ChatMessage(1, chatMessage.getText());
             this.client.sendMessage(message);
@@ -130,6 +131,7 @@ public class SecureChatUI extends Application
     void login(String alias, String serverIp, int portNo, String password){
             // try creating a new Client with GUI
             client = new Client(serverIp, portNo, alias, password, this);
+            client.start();
             connectButton.setText("Logout");
     }
 
