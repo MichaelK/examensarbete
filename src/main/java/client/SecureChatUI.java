@@ -79,39 +79,39 @@ public class SecureChatUI extends Application
         loginButton = new Button("Login");
         this.login = loginButton;
         loginButton.setOnAction((event) -> {
-            String username = userName.getText().trim();
-            // empty username ignore it
-            if(username.length() == 0){
-                return;
-            }
-            // empty serverAddress ignore it
-            String server = serverIpField.getText().trim();
-            if(server.length() == 0){
-                return;
-            }
-            String portNumber = portNo.getText().trim();
-            // empty or invalid port number, ignore it
-            if(portNumber.length() == 0){
-                return;
-            }
-            int port = 0;
-            try {
-                port = Integer.parseInt(portNumber);
-            }
-            catch(Exception ex) {
-                return;   // nothing I can do if port number is not valid
-            }
-            // try creating a new Client with GUI
-            client = new Client(server, port, username, this);
-            // test if we can start the Client
-            if(!client.start())
-                System.out.println("!client.start() in secureChatUI");
-            return;
+//            String username = userName.getText().trim();
+//            // empty username ignore it
+//            if(username.length() == 0){
+//                return;
+//            }
+//            // empty serverAddress ignore it
+//            String server = serverIpField.getText().trim();
+//            if(server.length() == 0){
+//                return;
+//            }
+//            String portNumber = portNo.getText().trim();
+//            // empty or invalid port number, ignore it
+//            if(portNumber.length() == 0){
+//                return;
+//            }
+//            int port = 0;
+//            try {
+//                port = Integer.parseInt(portNumber);
+//            }
+//            catch(Exception ex) {
+//                return;   // nothing I can do if port number is not valid
+//            }
+//            // try creating a new Client with GUI
+//            client = new Client(server, port, username, this);
+//            // test if we can start the Client
+//            if(!client.start())
+//                System.out.println("!client.start() in secureChatUI");
+//            return;
         });
 
         logoutButton = new Button("logout");
         logoutButton.setOnAction((event) -> {
-            LoginGUI loginGUI = new LoginGUI();
+            LoginGUI loginGUI = new LoginGUI(this);
             loginGUI.start();
 //            ChatMessage message = new ChatMessage(2, chatMessage.getText());
 //            this.client.sendMessage(message);
@@ -173,6 +173,14 @@ public class SecureChatUI extends Application
 
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    void login(String alias, String serverIp, int portNo, String password){
+            // try creating a new Client with GUI
+            client = new Client(serverIp, portNo, alias, password, this);
+            // test if we can start the Client
+            if(!client.start())
+                System.out.println("!client.start() in secureChatUI");
     }
 
     // called by the Client to append text in the TextArea

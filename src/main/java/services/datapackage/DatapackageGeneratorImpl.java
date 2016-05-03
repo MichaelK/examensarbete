@@ -17,7 +17,7 @@ import java.util.Arrays;
  */
 public class DatapackageGeneratorImpl implements DatapackageGenerator {
 
-    byte[] symmetricKey = "12345678123456781234567812345678".getBytes();
+    //byte[] symmetricKey = "12345678123456781234567812345678".getBytes();
 
     CompressionGenerator compressionGenerator;
     EncryptionGenerator encryptionGenerator;
@@ -32,7 +32,7 @@ public class DatapackageGeneratorImpl implements DatapackageGenerator {
     }
 
     @Override
-    public String generateDatapackage(String message){
+    public String generateDatapackage(String message, byte[] symmetricKey){
 
         byte[] msg = message.getBytes();
 
@@ -54,7 +54,7 @@ public class DatapackageGeneratorImpl implements DatapackageGenerator {
     }
 
     @Override
-    public String openDatapackage(String encryptedMessage){
+    public String openDatapackage(String encryptedMessage, byte[] symmetricKey){
 
         byte[] msg = Base64.decode(encryptedMessage);
 

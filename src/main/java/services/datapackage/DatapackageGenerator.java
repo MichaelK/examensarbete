@@ -5,7 +5,7 @@ package services.datapackage;
  */
 public interface DatapackageGenerator {
 
-    String generateDatapackage(String message);
+    String generateDatapackage(String message, byte[] symmmetricKey);
 
-    String openDatapackage(String encryptedMessage);
+    String openDatapackage(String encryptedMessage, byte[] symmmetricKey);
 }

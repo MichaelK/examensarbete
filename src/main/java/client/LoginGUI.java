@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -16,6 +15,12 @@ import javafx.stage.Stage;
  * Created by Michael on 2016-05-03.
  */
 public class LoginGUI {
+
+    SecureChatUI secureChatUI;
+
+    public LoginGUI(SecureChatUI secureChatUI){
+        this.secureChatUI = secureChatUI;
+    }
 
     public void start(){
 
@@ -52,7 +57,8 @@ public class LoginGUI {
         gridPane.add(btnLogin, 1, 4);
 
         btnLogin.setOnAction((event) ->{
-
+            this.secureChatUI.login(txtAlias.getText(), txtServerIp.getText(), Integer.parseInt(txtPort.getText()), passwordField.getText());
+            primaryStage.close();
         });
 
         hb.getChildren().addAll(gridPane);

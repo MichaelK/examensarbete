@@ -1,7 +1,10 @@
 package client;
 
+import org.bouncycastle.util.encoders.Hex;
 import services.datapackage.DatapackageGenerator;
 import services.datapackage.DatapackageGeneratorImpl;
+import services.hash.HashGenerator;
+import services.hash.HashGeneratorImpl;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -23,18 +26,22 @@ public class Client {
     private String server;
     private String username;
     private int port;
+    private byte[] symmetricKey;
 
     private boolean isServer;
 
     private DatapackageGenerator datapackageGenerator;
+    private HashGenerator hashGenerator;
 
 
-    Client(String server, int port, String username, SecureChatUI secureChatUI) {
+    Client(String server, int port, String username, String password, SecureChatUI secureChatUI) {
         this.server = server;
         this.port = port;
         this.username = username;
         this.secureChatUI = secureChatUI;
         this.datapackageGenerator = new DatapackageGeneratorImpl();
+        this.hashGenerator = new HashGeneratorImpl();
+        this.symmetricKey = createSymmetricKey(password);
     }
 
     public boolean start() {
@@ -78,6 +85,10 @@ public class Client {
         return true;
     }
 
+    private byte[] createSymmetricKey(String password){
+        return hashGenerator.generate(password, 256);
+    }
+
 
     // To send a message to the console or the GUI
 
@@ -95,7 +106,7 @@ public class Client {
         String message = chatMessage.getMessage();
         switch(chatmsg.getType()){
             case ChatMessage.MESSAGE:
-                String generateMsg = datapackageGenerator.generateDatapackage(message);
+                String generateMsg = datapackageGenerator.generateDatapackage(message, symmetricKey);
                 chatMessage.setMessage(generateMsg);
                 break;
             case ChatMessage.LOGOUT:
@@ -150,7 +161,7 @@ public class Client {
                     if (obj.getClass().equals(ChatMessage.class)){
                         ChatMessage chatMessage = (ChatMessage) obj;
                         String msg = chatMessage.getMessage();
-                        String openMsg = datapackageGenerator.openDatapackage(msg);
+                        String openMsg = datapackageGenerator.openDatapackage(msg, symmetricKey);
                         secureChatUI.append(openMsg + "\n");
                     }else if (obj.getClass().equals(String.class)){
                         String msg = (String) obj;
