@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -21,8 +22,6 @@ import server.ServerGUI;
 public class SecureChatUI extends Application
 {
     private Label label;
-    // to Logout and get the list of the users
-    private Button login, logout, whoIsIn;
     // for the chat room
     private TextArea chatArea;
     // the Client object
@@ -36,13 +35,14 @@ public class SecureChatUI extends Application
     private TextArea chatRoom;
     private TextField chatMessage;
     private Button logoutButton;
-    private Button loginButton;
+    private Button connectButton;
     private Button startServer;
+    private Button whoIsIn;
 
-    final HBox hbConnection = new HBox();
+    final GridPane gridPane = new GridPane();
     final HBox hbBottom = new HBox();
     final HBox hbInput = new HBox();
-    final HBox hbStartSever = new HBox();
+    final HBox hbTop = new HBox();
 
     final VBox vbox = new VBox();
 
@@ -55,8 +55,8 @@ public class SecureChatUI extends Application
 
         Scene scene = new Scene(new Group());
         primaryStage.setTitle("SecureChat");
-        primaryStage.setWidth(640);
-        primaryStage.setHeight(400);
+        //primaryStage.setWidth(640);
+        //primaryStage.setHeight(400);
 
         Label serverIpLabel = new Label("Server IP: ");
         //serverIpLabel.setFont(new Font("Arial", 12));
@@ -76,46 +76,18 @@ public class SecureChatUI extends Application
         userName.setPromptText("Alias");
         userName.setEditable(true);
 
-        loginButton = new Button("Login");
-        this.login = loginButton;
-        loginButton.setOnAction((event) -> {
-//            String username = userName.getText().trim();
-//            // empty username ignore it
-//            if(username.length() == 0){
-//                return;
-//            }
-//            // empty serverAddress ignore it
-//            String server = serverIpField.getText().trim();
-//            if(server.length() == 0){
-//                return;
-//            }
-//            String portNumber = portNo.getText().trim();
-//            // empty or invalid port number, ignore it
-//            if(portNumber.length() == 0){
-//                return;
-//            }
-//            int port = 0;
-//            try {
-//                port = Integer.parseInt(portNumber);
-//            }
-//            catch(Exception ex) {
-//                return;   // nothing I can do if port number is not valid
-//            }
-//            // try creating a new Client with GUI
-//            client = new Client(server, port, username, this);
-//            // test if we can start the Client
-//            if(!client.start())
-//                System.out.println("!client.start() in secureChatUI");
-//            return;
+        connectButton = new Button("Login");
+        connectButton.setOnAction((event) -> {
+            LoginGUI loginGUI = new LoginGUI(this);
+            loginGUI.start();
         });
+
 
         logoutButton = new Button("logout");
         logoutButton.setOnAction((event) -> {
-            LoginGUI loginGUI = new LoginGUI(this);
-            loginGUI.start();
-//            ChatMessage message = new ChatMessage(2, chatMessage.getText());
-//            this.client.sendMessage(message);
-//            this.client.disconnect();
+            ChatMessage message = new ChatMessage(2, chatMessage.getText());
+            this.client.sendMessage(message);
+            this.client.disconnect();
         });
 
         startServer = new Button("Start Server");
@@ -140,34 +112,37 @@ public class SecureChatUI extends Application
 
         chatMessage = new TextField();
         chatMessage.setPromptText("Enter Your Chat Message Here");
-        chatMessage.setPrefWidth(300);
+        chatMessage.setPrefWidth(420);
 
         chatRoom = new TextArea();
         chatRoom.setPromptText("Welcome to the Chat room");
+        chatRoom.setPrefWidth(420);
         chatRoom.setEditable(false);
 
         //chatRoom.setScrollTop(100);
 
-        hbConnection.setSpacing(5);
-        hbConnection.setPadding(new Insets(10, 0, 30, 10));
-        hbConnection.getChildren().addAll(serverIpLabel, serverIpField, portLabel, portNo, userLabel, userName);
-        hbConnection.setCenterShape(true);
-
         hbBottom.setSpacing(5);
-        hbBottom.setPadding(new Insets(25, 0, 0, 10));
-        hbBottom.getChildren().addAll(hbInput, loginButton, logoutButton, whoIsIn);
+        hbBottom.setPadding(new Insets(25, 0, 0, 0));
+        hbBottom.getChildren().addAll(hbInput);
 
         hbInput.setSpacing(5);
-        hbInput.setPadding(new Insets(0, 50, 0, 10));
+        hbInput.setPadding(new Insets(0, 50, 0, 0));
         hbInput.getChildren().addAll(chatMessage, sendButton);
 
-        hbStartSever.setSpacing(5);
-        hbStartSever.setPadding(new Insets(0, 50, 0, 10));
-        hbStartSever.getChildren().addAll(startServer);
+        hbTop.setSpacing(5);
+        hbTop.setPadding(new Insets(0, 50, 0, 0));
+        hbTop.getChildren().addAll(connectButton, startServer, logoutButton, whoIsIn);
+
+        gridPane.setPadding(new Insets(20,20,20,20));
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        gridPane.add(hbTop, 0, 0);
+        gridPane.add(chatRoom, 0, 1);
+        gridPane.add(hbBottom, 0, 2);
 
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(hbConnection, hbStartSever, chatRoom, hbBottom);
+        vbox.getChildren().addAll(gridPane);
 
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
 

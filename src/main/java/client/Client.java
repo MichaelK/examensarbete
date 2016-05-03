@@ -85,13 +85,13 @@ public class Client {
         return true;
     }
 
+    // Create a symmetricKey from the password
     private byte[] createSymmetricKey(String password){
         return hashGenerator.generate(password, 256);
     }
 
 
     // To send a message to the console or the GUI
-
     private void display(String msg) {
         if(secureChatUI == null)
             System.out.println("display secureChatUI == null");      // println in console mode
@@ -162,7 +162,7 @@ public class Client {
                         ChatMessage chatMessage = (ChatMessage) obj;
                         String msg = chatMessage.getMessage();
                         String openMsg = datapackageGenerator.openDatapackage(msg, symmetricKey);
-                        secureChatUI.append(openMsg + "\n");
+                        secureChatUI.append(chatMessage.getSender() + " : " + openMsg + "\n");
                     }else if (obj.getClass().equals(String.class)){
                         String msg = (String) obj;
                         secureChatUI.append(msg);
