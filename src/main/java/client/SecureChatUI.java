@@ -111,9 +111,11 @@ public class SecureChatUI extends Application
 
         logoutButton = new Button("logout");
         logoutButton.setOnAction((event) -> {
-            ChatMessage message = new ChatMessage(2, chatMessage.getText());
-            this.client.sendMessage(message);
-            this.client.disconnect();
+            LoginGUI loginGUI = new LoginGUI();
+            loginGUI.start();
+//            ChatMessage message = new ChatMessage(2, chatMessage.getText());
+//            this.client.sendMessage(message);
+//            this.client.disconnect();
         });
 
         startServer = new Button("Start Server");
