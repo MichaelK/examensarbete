@@ -29,12 +29,8 @@ public class SecureChatUI extends Application
 
     private ServerGUI serverGUI;
 
-    private TextField portNo;
-    private TextField userName;
-    private TextField serverIpField;
     private TextArea chatRoom;
     private TextField chatMessage;
-    private Button logoutButton;
     private Button connectButton;
     private Button startServer;
     private Button whoIsIn;
@@ -57,24 +53,6 @@ public class SecureChatUI extends Application
         primaryStage.setTitle("SecureChat");
         //primaryStage.setWidth(640);
         //primaryStage.setHeight(400);
-
-        Label serverIpLabel = new Label("Server IP: ");
-        //serverIpLabel.setFont(new Font("Arial", 12));
-        serverIpField = new TextField();
-        serverIpField.setPromptText("Server IP");
-        serverIpField.setEditable(true);
-
-        portNo = new TextField();
-        Label portLabel = new Label("Port: ");
-        //portLabel.setFont(new Font("Arial", 12));
-        portNo.setPromptText("Port number");
-        portNo.setEditable(true);
-
-        userName = new TextField();
-        Label userLabel = new Label("Name: ");
-        //userLabel.setFont(new Font("Arial", 12));
-        userName.setPromptText("Alias");
-        userName.setEditable(true);
 
         connectButton = new Button("Connect");
         connectButton.setOnAction((event) -> {
@@ -153,9 +131,6 @@ public class SecureChatUI extends Application
             // try creating a new Client with GUI
             client = new Client(serverIp, portNo, alias, password, this);
             connectButton.setText("Logout");
-            // test if we can start the Client
-            if(!client.start())
-                System.out.println("!client.start() in secureChatUI");
     }
 
     // called by the Client to append text in the TextArea
