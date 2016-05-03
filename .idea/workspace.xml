@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b99a9806-dfd3-4f88-a7a8-3ddf9ed1c56c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/Client.java" afterPath="$PROJECT_DIR$/src/main/java/client/Client.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/SecureChatUI.java" afterPath="$PROJECT_DIR$/src/main/java/client/SecureChatUI.java" />
     </list>
     <ignored path="SecureChat.iws" />
@@ -39,10 +38,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Client.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Client.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/client/Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5547619">
+            <state vertical-scroll-proportion="0.0">
               <caret line="164" column="78" selection-start-line="164" selection-start-column="78" selection-end-line="164" selection-end-column="78" />
               <folding>
                 <element signature="e#2754#2755#0" expanded="true" />
@@ -66,7 +65,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/client/LoginGUI.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="48" column="8" selection-start-line="48" selection-start-column="8" selection-end-line="50" selection-end-column="40" />
+              <caret line="59" column="141" selection-start-line="59" selection-start-column="141" selection-end-line="59" selection-end-column="141" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#501#502#0" expanded="true" />
@@ -76,11 +75,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SecureChatUI.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SecureChatUI.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/client/SecureChatUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="58" column="10" selection-start-line="58" selection-start-column="10" selection-end-line="58" selection-end-column="10" />
+            <state vertical-scroll-proportion="0.6109091">
+              <caret line="132" column="62" selection-start-line="132" selection-start-column="62" selection-end-line="132" selection-end-column="62" />
               <folding />
             </state>
           </provider>
@@ -146,11 +145,11 @@
         <option value="$PROJECT_DIR$/src/main/java/client/ChatMessage.java" />
         <option value="$PROJECT_DIR$/src/main/java/server/Server.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/main/java/client/LoginGUI.java" />
         <option value="$PROJECT_DIR$/src/main/java/services/datapackage/DatapackageGeneratorImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/services/datapackage/DatapackageGenerator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/client/SecureChatUI.java" />
         <option value="$PROJECT_DIR$/src/main/java/client/Client.java" />
+        <option value="$PROJECT_DIR$/src/main/java/client/LoginGUI.java" />
+        <option value="$PROJECT_DIR$/src/main/java/client/SecureChatUI.java" />
       </list>
     </option>
   </component>
@@ -1117,12 +1116,12 @@
       <workItem from="1461766958096" duration="1301000" />
       <workItem from="1461934173509" duration="201000" />
       <workItem from="1462182371638" duration="1257000" />
-      <workItem from="1462269328611" duration="8806000" />
+      <workItem from="1462269328611" duration="9586000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="90845000" />
+    <option name="totallyTimeSpent" value="91625000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="313" y="13" width="1468" height="1000" extended-state="0" />
@@ -1135,7 +1134,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33410138" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33410138" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24573864" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
@@ -1533,23 +1532,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/client/LoginGUI.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/server/Server.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="8" selection-start-line="48" selection-start-column="8" selection-end-line="50" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#501#502#0" expanded="true" />
-            <element signature="e#549#550#0" expanded="true" />
-          </folding>
+          <caret line="147" column="14" selection-start-line="147" selection-start-column="14" selection-end-line="147" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/client/SecureChatUI.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="58" column="10" selection-start-line="58" selection-start-column="10" selection-end-line="58" selection-end-column="10" />
-          <folding />
+          <caret line="164" column="78" selection-start-line="164" selection-start-column="78" selection-end-line="164" selection-end-column="78" />
+          <folding>
+            <element signature="e#2754#2755#0" expanded="true" />
+            <element signature="e#2814#2815#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1561,22 +1559,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/server/Server.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/client/LoginGUI.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="147" column="14" selection-start-line="147" selection-start-column="14" selection-end-line="147" selection-end-column="14" />
-          <folding />
+          <caret line="59" column="141" selection-start-line="59" selection-start-column="141" selection-end-line="59" selection-end-column="141" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#501#502#0" expanded="true" />
+            <element signature="e#549#550#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/client/Client.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/client/SecureChatUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5547619">
-          <caret line="164" column="78" selection-start-line="164" selection-start-column="78" selection-end-line="164" selection-end-column="78" />
-          <folding>
-            <element signature="e#2754#2755#0" expanded="true" />
-            <element signature="e#2814#2815#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.6109091">
+          <caret line="132" column="62" selection-start-line="132" selection-start-column="62" selection-end-line="132" selection-end-column="62" />
+          <folding />
         </state>
       </provider>
     </entry>

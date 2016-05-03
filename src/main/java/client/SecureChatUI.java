@@ -76,18 +76,17 @@ public class SecureChatUI extends Application
         userName.setPromptText("Alias");
         userName.setEditable(true);
 
-        connectButton = new Button("Login");
+        connectButton = new Button("Connect");
         connectButton.setOnAction((event) -> {
-            LoginGUI loginGUI = new LoginGUI(this);
-            loginGUI.start();
-        });
-
-
-        logoutButton = new Button("logout");
-        logoutButton.setOnAction((event) -> {
-            ChatMessage message = new ChatMessage(2, chatMessage.getText());
-            this.client.sendMessage(message);
-            this.client.disconnect();
+            if(connectButton.getText().equals("Connect")){
+                LoginGUI loginGUI = new LoginGUI(this);
+                loginGUI.start();
+            }else{
+                ChatMessage message = new ChatMessage(2, chatMessage.getText());
+                this.client.sendMessage(message);
+                this.client.disconnect();
+                connectButton.setText("Connect");
+            }
         });
 
         startServer = new Button("Start Server");
@@ -131,7 +130,7 @@ public class SecureChatUI extends Application
 
         hbTop.setSpacing(5);
         hbTop.setPadding(new Insets(0, 50, 0, 0));
-        hbTop.getChildren().addAll(connectButton, startServer, logoutButton, whoIsIn);
+        hbTop.getChildren().addAll(connectButton, startServer, whoIsIn);
 
         gridPane.setPadding(new Insets(20,20,20,20));
         gridPane.setHgap(15);
@@ -153,6 +152,7 @@ public class SecureChatUI extends Application
     void login(String alias, String serverIp, int portNo, String password){
             // try creating a new Client with GUI
             client = new Client(serverIp, portNo, alias, password, this);
+            connectButton.setText("Logout");
             // test if we can start the Client
             if(!client.start())
                 System.out.println("!client.start() in secureChatUI");
