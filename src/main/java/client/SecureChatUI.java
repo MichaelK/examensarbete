@@ -81,7 +81,7 @@ public class SecureChatUI extends Application
         });
 
         final Button sendButton = new Button("Send");
-        //sendButton.defaultButtonProperty().bind(sendButton.focusedProperty());
+        sendButton.setDefaultButton(true);
         sendButton.setOnAction((event) -> {
             ChatMessage message = new ChatMessage(1, chatMessage.getText());
             this.client.sendMessage(message);
