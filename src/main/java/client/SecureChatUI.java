@@ -114,6 +114,7 @@ public class SecureChatUI extends Application
         hbTop.setPadding(new Insets(0, 50, 0, 0));
         hbTop.getChildren().addAll(connectButton, startServerButton, showLobbyButton);
 
+        gridPane.getStyleClass().add("gridPane");
         gridPane.setPadding(new Insets(20,20,20,20));
         gridPane.setHgap(15);
         gridPane.setVgap(15);
@@ -122,7 +123,7 @@ public class SecureChatUI extends Application
         gridPane.add(hbBottom, 0, 2);
 
         vbox.setSpacing(5);
-        vbox.setPadding(new Insets(10, 0, 0, 10));
+        //vbox.setPadding(new Insets(10, 0, 0, 10));
         vbox.getChildren().addAll(gridPane);
 
         ((Group) scene.getRoot()).getChildren().addAll(vbox);

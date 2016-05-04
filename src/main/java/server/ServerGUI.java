@@ -39,8 +39,8 @@ public class ServerGUI {
         Stage primaryStage = new Stage();
         Scene scene = new Scene(new Group());
         primaryStage.setTitle("Server GUI");
-        primaryStage.setWidth(530);
-        primaryStage.setHeight(490);
+        //primaryStage.setWidth(530);
+        //primaryStage.setHeight(490);
 
         portNo = new TextField();
         Label portLabel = new Label("Port Number:");
@@ -64,17 +64,20 @@ public class ServerGUI {
         eventLog.setScrollTop(100);
 
         hb.setSpacing(3);
-        hb.setPadding(new Insets(10, 0, 0, 10));
+        //hb.setPadding(new Insets(10, 0, 0, 10));
         hb.getChildren().addAll(portLabel, portNo, stopStartButton);
         hb.setCenterShape(true);
 
         vbox.setSpacing(5);
-        vbox.setPadding(new Insets(10, 0, 0, 10));
+        //vbox.setPadding(new Insets(10, 0, 0, 10));
         vbox.getChildren().addAll(chatArea, eventLog);
+        vbox.setCenterShape(true);
 
+        vbox2.getStyleClass().add("vbox2");
         vbox2.setSpacing(5);
-        vbox2.setPadding(new Insets(10, 0, 0, 10));
+        vbox2.setPadding(new Insets(25, 25, 25, 25));
         vbox2.getChildren().addAll(hb,vbox);
+        vbox2.setCenterShape(true);
 
         ((Group) scene.getRoot()).getChildren().addAll(vbox2);
 

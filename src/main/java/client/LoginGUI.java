@@ -29,9 +29,10 @@ public class LoginGUI {
         primaryStage.setTitle("Login GUI");
 
         HBox hb = new HBox();
-        hb.setPadding(new Insets(20,20,20,20));
+        //hb.setPadding(new Insets(20,20,20,20));
 
         GridPane gridPane = new GridPane();
+        gridPane.getStyleClass().add("gridPane");
         gridPane.setPadding(new Insets(20,20,20,20));
         gridPane.setHgap(5);
         gridPane.setVgap(5);

@@ -38,3 +38,11 @@
 .button:hover {
     -fx-background-color: linear-gradient(#2A5058, #61a2b1);
 }
+
+.gridPane{
+    -fx-background-image: url("background.jpg");
+}
+
+.vbox2{
+    -fx-background-image: url("background.jpg");
+}
