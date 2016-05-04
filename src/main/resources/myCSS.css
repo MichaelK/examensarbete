@@ -3,6 +3,30 @@
     -fx-background-color: #BDBDBD;
 }
 
-.button {
-    -fx-background-color: aqua;
+.connectButton{
+    -fx-background-color: chartreuse;
+}
+
+.startServerButton{
+    -fx-background-color: gold;
+}
+
+.showLobbyButton{
+    -fx-background-color: burlywood;
+    -fx-alignment: baseline-right;
+}
+
+.sendButton{
+    -fx-background-color: darkseagreen;
+}
+
+.button{
+    -fx-text-fill: rgb(49, 89, 23);
+    -fx-border-color: rgb(49, 89, 23);
+    -fx-border-radius: 5;
+    -fx-padding: 3 6 6 6;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#2A5058, #61a2b1);
 }

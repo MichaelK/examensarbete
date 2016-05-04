@@ -32,7 +32,7 @@ public class SecureChatUI extends Application
     private TextArea chatRoom;
     private TextField chatMessage;
     private Button connectButton;
-    private Button startServer;
+    private Button startServerButton;
     private Button whoIsIn;
 
     final GridPane gridPane = new GridPane();
@@ -55,6 +55,7 @@ public class SecureChatUI extends Application
         //primaryStage.setHeight(400);
 
         connectButton = new Button("Connect");
+        connectButton.getStyleClass().add("connectButton");
         connectButton.setOnAction((event) -> {
             if(connectButton.getText().equals("Connect")){
                 LoginGUI loginGUI = new LoginGUI(this);
@@ -67,20 +68,22 @@ public class SecureChatUI extends Application
             }
         });
 
-        startServer = new Button("Start Server");
-        startServer.setOnAction((event) -> {
+        startServerButton = new Button("Start Server");
+        startServerButton.getStyleClass().add("startServerButton");
+        startServerButton.setOnAction((event) -> {
             serverGUI = new ServerGUI();
             serverGUI.start();
         });
 
-        final Button whoIsIn = new Button("whoIsIn");
-        this.whoIsIn = whoIsIn;
-        whoIsIn.setOnAction((event) ->{
+        final Button showLobbyButton = new Button("Show Lobby");
+        showLobbyButton.getStyleClass().add("showLobbyButton");
+        showLobbyButton.setOnAction((event) ->{
             ChatMessage message = new ChatMessage(0, chatMessage.getText());
             this.client.sendMessage(message);
         });
 
         final Button sendButton = new Button("Send");
+        sendButton.getStyleClass().add("sendButton");
         sendButton.setDefaultButton(true);
         sendButton.setOnAction((event) -> {
             ChatMessage message = new ChatMessage(1, chatMessage.getText());
@@ -109,7 +112,7 @@ public class SecureChatUI extends Application
 
         hbTop.setSpacing(5);
         hbTop.setPadding(new Insets(0, 50, 0, 0));
-        hbTop.getChildren().addAll(connectButton, startServer, whoIsIn);
+        hbTop.getChildren().addAll(connectButton, startServerButton, showLobbyButton);
 
         gridPane.setPadding(new Insets(20,20,20,20));
         gridPane.setHgap(15);
@@ -125,6 +128,9 @@ public class SecureChatUI extends Application
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
 
         primaryStage.setScene(scene);
+
+        scene.getStylesheets().add("myCSS.css");
+
         primaryStage.show();
     }
 
