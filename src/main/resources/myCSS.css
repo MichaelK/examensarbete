@@ -46,3 +46,12 @@
 .vbox2{
     -fx-background-image: url("background.jpg");
 }
+
+.chatRoom{
+    -fx-prompt-text-fill: darkblue;
+}
+
+.chatMessage{
+    -fx-prompt-text-fill: darkseagreen;
+}
+

@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b99a9806-dfd3-4f88-a7a8-3ddf9ed1c56c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/LoginGUI.java" afterPath="$PROJECT_DIR$/src/main/java/client/LoginGUI.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/SecureChatUI.java" afterPath="$PROJECT_DIR$/src/main/java/client/SecureChatUI.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/server/ServerGUI.java" afterPath="$PROJECT_DIR$/src/main/java/server/ServerGUI.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/myCSS.css" afterPath="$PROJECT_DIR$/src/main/resources/myCSS.css" />
     </list>
     <ignored path="SecureChat.iws" />
@@ -55,11 +53,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ServerGUI.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ServerGUI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/server/ServerGUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.20238096">
-              <caret line="42" column="10" selection-start-line="42" selection-start-column="10" selection-end-line="42" selection-end-column="10" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="48" column="33" selection-start-line="48" selection-start-column="33" selection-end-line="48" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -81,7 +79,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/client/SecureChatUI.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="117" column="53" selection-start-line="117" selection-start-column="53" selection-end-line="117" selection-end-column="53" />
+              <caret line="95" column="63" selection-start-line="95" selection-start-column="63" selection-end-line="95" selection-end-column="63" />
               <folding />
             </state>
           </provider>
@@ -97,11 +95,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="myCSS.css" pinned="false" current-in-tab="false">
+      <file leaf-file-name="myCSS.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/resources/myCSS.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-18.192308">
-              <caret line="46" column="48" selection-start-line="46" selection-start-column="48" selection-end-line="46" selection-end-column="48" />
+            <state vertical-scroll-proportion="0.8053435">
+              <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -161,9 +159,9 @@
         <option value="$PROJECT_DIR$/src/main/java/services/datapackage/DatapackageGenerator.java" />
         <option value="$PROJECT_DIR$/src/main/java/client/Client.java" />
         <option value="$PROJECT_DIR$/src/main/java/client/LoginGUI.java" />
+        <option value="$PROJECT_DIR$/src/main/java/server/ServerGUI.java" />
         <option value="$PROJECT_DIR$/src/main/java/client/SecureChatUI.java" />
         <option value="$PROJECT_DIR$/src/main/resources/myCSS.css" />
-        <option value="$PROJECT_DIR$/src/main/java/server/ServerGUI.java" />
       </list>
     </option>
   </component>
@@ -1137,12 +1135,12 @@
       <workItem from="1461934173509" duration="201000" />
       <workItem from="1462182371638" duration="1257000" />
       <workItem from="1462269328611" duration="15223000" />
-      <workItem from="1462349860015" duration="6262000" />
+      <workItem from="1462349860015" duration="8944000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="103524000" />
+    <option name="totallyTimeSpent" value="106206000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="250" y="43" width="1468" height="1000" extended-state="0" />
@@ -1155,7 +1153,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328341" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33410138" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33410138" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24573864" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
@@ -1563,14 +1561,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/client/SecureChatUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="117" column="53" selection-start-line="117" selection-start-column="53" selection-end-line="117" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/client/LoginGUI.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1581,18 +1571,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/myCSS.css">
+    <entry file="file://$PROJECT_DIR$/src/main/java/server/ServerGUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.192308">
-          <caret line="46" column="48" selection-start-line="46" selection-start-column="48" selection-end-line="46" selection-end-column="48" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="48" column="33" selection-start-line="48" selection-start-column="33" selection-end-line="48" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/server/ServerGUI.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/client/SecureChatUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20238096">
-          <caret line="42" column="10" selection-start-line="42" selection-start-column="10" selection-end-line="42" selection-end-column="10" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="95" column="63" selection-start-line="95" selection-start-column="63" selection-end-line="95" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/myCSS.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8053435">
+          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
           <folding />
         </state>
       </provider>
