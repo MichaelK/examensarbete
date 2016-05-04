@@ -44,7 +44,8 @@ public class LoginGUI {
         final TextField txtPort = new TextField();
         Label lblPassword = new Label("Password");
         final PasswordField passwordField = new PasswordField();
-        Button btnLogin = new Button("Login");
+        Button loginButton = new Button("Login");
+        loginButton.getStyleClass().add("loginButton");
 
         gridPane.add(lblAlias, 0, 0);
         gridPane.add(txtAlias, 1, 0);
@@ -54,9 +55,9 @@ public class LoginGUI {
         gridPane.add(txtPort, 1, 2);
         gridPane.add(lblPassword, 0, 3);
         gridPane.add(passwordField, 1, 3);
-        gridPane.add(btnLogin, 1, 4);
+        gridPane.add(loginButton, 1, 4);
 
-        btnLogin.setOnAction((event) ->{
+        loginButton.setOnAction((event) ->{
             this.secureChatUI.login(txtAlias.getText(), txtServerIp.getText(), Integer.parseInt(txtPort.getText()), passwordField.getText());
             primaryStage.close();
         });

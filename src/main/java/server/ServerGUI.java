@@ -23,7 +23,7 @@ public class ServerGUI {
     final VBox vbox = new VBox();
     final VBox vbox2 = new VBox();
 
-    private Button stopStart;
+    private Button stopStartButton;
     // TextArea for the chatArea room and the events
     // The port number
     private TextField portNo;
@@ -48,8 +48,9 @@ public class ServerGUI {
         portNo.setPromptText("Port No ");
         portNo.setEditable(true);
 
-        stopStart = new Button("Start");
-        stopStart.setOnAction((event) ->{
+        stopStartButton = new Button("Start");
+        stopStartButton.getStyleClass().add("stopStartButton");
+        stopStartButton.setOnAction((event) ->{
             startStopButton();
         });
 
@@ -64,7 +65,7 @@ public class ServerGUI {
 
         hb.setSpacing(3);
         hb.setPadding(new Insets(10, 0, 0, 10));
-        hb.getChildren().addAll(portLabel, portNo, stopStart);
+        hb.getChildren().addAll(portLabel, portNo, stopStartButton);
         hb.setCenterShape(true);
 
         vbox.setSpacing(5);
@@ -78,6 +79,9 @@ public class ServerGUI {
         ((Group) scene.getRoot()).getChildren().addAll(vbox2);
 
         primaryStage.setScene(scene);
+
+        scene.getStylesheets().add("myCSS.css");
+
         primaryStage.show();
     }
 
@@ -88,7 +92,7 @@ public class ServerGUI {
         if(server != null) {
             server.stop();
             server = null;
-            stopStart.setText("Start");
+            stopStartButton.setText("Start");
             return;
         }
         // OK start the server
@@ -105,7 +109,7 @@ public class ServerGUI {
         server = new Server(port, this);
         // and start it as a thread
         new ServerRunning().start();
-        stopStart.setText("Stop");
+        stopStartButton.setText("Stop");
         portNo.setEditable(false);
     }
 
@@ -140,7 +144,7 @@ public class ServerGUI {
             //Start server and keep it alive until manually stopped
             server.start();
             //Server has either crashed or been manually stopped
-            stopStart.setText("Start");
+            stopStartButton.setText("Start");
             portNo.setEditable(true);
             appendEvent("Server stopped!\n");
             server = null;
