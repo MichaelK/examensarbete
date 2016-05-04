@@ -55,11 +55,11 @@ public class ServerGUI {
         });
 
         chatArea = new TextArea();
-        chatArea.setPromptText("Chat Room");
+        chatArea.setPromptText("Chatroom");
         chatArea.setEditable(false);
 
         eventLog = new TextArea();
-        eventLog.setPromptText("Event Log");
+        eventLog.setPromptText("Eventlog");
         eventLog.setEditable(false);
         eventLog.setScrollTop(100);
 

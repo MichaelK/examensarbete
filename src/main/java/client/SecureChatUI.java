@@ -98,7 +98,7 @@ public class SecureChatUI extends Application
 
         chatRoom = new TextArea();
         chatRoom.getStyleClass().add("chatRoom");
-        chatRoom.setPromptText("Welcome to the chatroom!");
+        //chatRoom.setPromptText("Welcome to the chatroom!");
         chatRoom.setPrefWidth(420);
         chatRoom.setEditable(false);
 
@@ -134,6 +134,8 @@ public class SecureChatUI extends Application
 
         scene.getStylesheets().add("myCSS.css");
 
+        startupText();
+
         primaryStage.show();
     }
 
@@ -154,5 +156,13 @@ public class SecureChatUI extends Application
                 chatRoom.positionCaret(chatRoom.getText().length() - 1);
             }
         });
+    }
+
+    void startupText(){
+        append("Welcome to the chatroom!\n\n1) Start a new server if you are going to be the host.\n2) Connect to a known server.\n");
+    }
+
+    void clearChatroom(){
+        chatRoom.clear();
     }
 }
