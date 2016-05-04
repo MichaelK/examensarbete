@@ -48,10 +48,16 @@
 }
 
 .chatRoom{
+    -fx-font-family: sans-serif;
     -fx-prompt-text-fill: darkblue;
+    -fx-border-color: black;
+    -fx-border-style: solid;
 }
 
 .chatMessage{
+    -fx-font-family: sans-serif;
     -fx-prompt-text-fill: darkseagreen;
+    -fx-border-color: black;
+    -fx-border-style: solid;
 }
 
