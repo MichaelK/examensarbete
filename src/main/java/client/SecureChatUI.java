@@ -146,6 +146,7 @@ public class SecureChatUI extends Application
             client.start();
             connectButton.setText("Logout");
             connectButtonStyleClass();
+            clearChatroom();
     }
 
     // called by the Client to append text in the TextArea

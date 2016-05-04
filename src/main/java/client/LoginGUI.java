@@ -63,7 +63,6 @@ public class LoginGUI {
         gridPane.add(loginButton, 1, 4);
 
         loginButton.setOnAction((event) ->{
-            this.secureChatUI.clearChatroom();
             this.secureChatUI.login(txtAlias.getText(), txtServerIp.getText(), Integer.parseInt(txtPort.getText()), passwordField.getText());
             primaryStage.close();
         });
