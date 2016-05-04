@@ -55,7 +55,7 @@ public class SecureChatUI extends Application
         //primaryStage.setHeight(400);
 
         connectButton = new Button("Connect");
-        connectButton.getStyleClass().add("connectButton");
+        connectButtonStyleClass();
         connectButton.setOnAction((event) -> {
             if(connectButton.getText().equals("Connect")){
                 LoginGUI loginGUI = new LoginGUI(this);
@@ -65,6 +65,7 @@ public class SecureChatUI extends Application
                 this.client.sendMessage(message);
                 this.client.disconnect();
                 connectButton.setText("Connect");
+                connectButtonStyleClass();
             }
         });
 
@@ -144,6 +145,7 @@ public class SecureChatUI extends Application
             client = new Client(serverIp, portNo, alias, password, this);
             client.start();
             connectButton.setText("Logout");
+            connectButtonStyleClass();
     }
 
     // called by the Client to append text in the TextArea
@@ -164,5 +166,15 @@ public class SecureChatUI extends Application
 
     void clearChatroom(){
         chatRoom.clear();
+    }
+
+    void connectButtonStyleClass(){
+        connectButton.getStyleClass().clear();
+        connectButton.getStyleClass().add("button");
+        if(connectButton.getText().equals("Connect")){
+            connectButton.getStyleClass().add("connectButton");
+        }else{
+            connectButton.getStyleClass().add("logoutButton");
+        }
     }
 }

@@ -7,6 +7,10 @@
     -fx-background-color: chartreuse;
 }
 
+.logoutButton{
+    -fx-background-color: crimson;
+}
+
 .startServerButton{
     -fx-background-color: gold;
 }

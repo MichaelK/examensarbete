@@ -161,7 +161,6 @@ public class Server {
         ClientThread(Socket socket) {
             id = ++uniqueId;
             this.socket = socket;
-            System.out.println("Thread trying to create Object Input/Output Streams");
             try
             {
                 // create output first
