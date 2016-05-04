@@ -19,12 +19,8 @@ import server.ServerGUI;
 /**
  * Created by Michael on 2016-02-27.
  */
-public class SecureChatUI extends Application
-{
-    private Label label;
-    // for the chat room
-    private TextArea chatArea;
-    // the Client object
+public class SecureChatUI extends Application{
+
     private Client client;
 
     private ServerGUI serverGUI;
@@ -33,7 +29,6 @@ public class SecureChatUI extends Application
     private TextField chatMessage;
     private Button connectButton;
     private Button startServerButton;
-    private Button whoIsIn;
 
     final GridPane gridPane = new GridPane();
     final HBox hbBottom = new HBox();
