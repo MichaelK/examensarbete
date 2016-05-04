@@ -66,6 +66,9 @@ public class LoginGUI {
         ((Group) scene.getRoot()).getChildren().addAll(hb);
 
         primaryStage.setScene(scene);
+
+        scene.getStylesheets().add("myCSS.css");
+
         primaryStage.show();
     }
 }
