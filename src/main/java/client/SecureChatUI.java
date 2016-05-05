@@ -74,16 +74,24 @@ public class SecureChatUI extends Application{
         final Button showLobbyButton = new Button("Show Lobby");
         showLobbyButton.getStyleClass().add("showLobbyButton");
         showLobbyButton.setOnAction((event) ->{
-            ChatMessage message = new ChatMessage(0, chatMessage.getText());
-            this.client.sendMessage(message);
+            if(this.client != null){
+                ChatMessage message = new ChatMessage(0, chatMessage.getText());
+                this.client.sendMessage(message);
+            }else{
+                append("You need to be connected to a server to see the lobby.");
+            }
         });
 
         final Button sendButton = new Button("Send");
         sendButton.getStyleClass().add("sendButton");
         sendButton.setDefaultButton(true);
         sendButton.setOnAction((event) -> {
-            ChatMessage message = new ChatMessage(1, chatMessage.getText());
-            this.client.sendMessage(message);
+            if(this.client != null){
+                ChatMessage message = new ChatMessage(1, chatMessage.getText());
+                this.client.sendMessage(message);
+            }else{
+                append("Need to connect to a server before sending messages!");
+            }
             chatMessage.setText("");
         });
 
@@ -156,7 +164,11 @@ public class SecureChatUI extends Application{
     }
 
     void startupText(){
-        append("Welcome to the chatroom!\n\n1) Start a new server if you are going to be the host.\n2) Connect to a known server.\n");
+        append("Welcome to the chatroom!\n\n" +
+                "1) Start a new server if you are going to be the host.\n" +
+                "2) Connect to a known server if you are not the host.\n" +
+                "3) All connected to a chatroom need to use the same password.\n" +
+                "4) The more complex a password the better the security is!\n");
     }
 
     void clearChatroom(){
