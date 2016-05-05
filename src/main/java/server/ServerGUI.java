@@ -23,7 +23,7 @@ public class ServerGUI {
     final VBox vbox = new VBox();
     final VBox vbox2 = new VBox();
 
-    private Button stopStartButton;
+    private Button startButton;
     // TextArea for the chatArea room and the events
     // The port number
     private TextField portNo;
@@ -48,9 +48,9 @@ public class ServerGUI {
         portNo.setPromptText("Port No ");
         portNo.setEditable(true);
 
-        stopStartButton = new Button("Start");
-        stopStartButton.getStyleClass().add("stopStartButton");
-        stopStartButton.setOnAction((event) ->{
+        startButton = new Button("Start");
+        startButtonStyleClass();
+        startButton.setOnAction((event) ->{
             startStopButton();
         });
 
@@ -65,7 +65,7 @@ public class ServerGUI {
 
         hb.setSpacing(3);
         //hb.setPadding(new Insets(10, 0, 0, 10));
-        hb.getChildren().addAll(portLabel, portNo, stopStartButton);
+        hb.getChildren().addAll(portLabel, portNo, startButton);
         hb.setCenterShape(true);
 
         vbox.setSpacing(5);
@@ -95,7 +95,8 @@ public class ServerGUI {
         if(server != null) {
             server.stop();
             server = null;
-            stopStartButton.setText("Start");
+            startButton.setText("Start");
+            startButtonStyleClass();
             return;
         }
         // OK start the server
@@ -112,7 +113,8 @@ public class ServerGUI {
         server = new Server(port, this);
         // and start it as a thread
         new ServerRunning().start();
-        stopStartButton.setText("Stop");
+        startButton.setText("Stop");
+        startButtonStyleClass();
         portNo.setEditable(false);
     }
 
@@ -141,13 +143,23 @@ public class ServerGUI {
         return server;
     }
 
+    void startButtonStyleClass(){
+        startButton.getStyleClass().clear();
+        startButton.getStyleClass().add("button");
+        if(startButton.getText().equals("Start")){
+            startButton.getStyleClass().add("startButton");
+        }else{
+            startButton.getStyleClass().add("stopButton");
+        }
+    }
+
     // A thread to run the Server
     class ServerRunning extends Thread {
         public void run() {
             //Start server and keep it alive until manually stopped
             server.start();
             //Server has either crashed or been manually stopped
-            stopStartButton.setText("Start");
+            startButton.setText("Start");
             portNo.setEditable(true);
             appendEvent("Server stopped!\n");
             server = null;

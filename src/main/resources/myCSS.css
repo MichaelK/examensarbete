@@ -28,8 +28,12 @@
     -fx-background-color: chartreuse;
 }
 
-.stopStartButton{
+.startButton{
     -fx-background-color: chartreuse;
+}
+
+.stopButton{
+    -fx-background-color: crimson;
 }
 
 .button{
