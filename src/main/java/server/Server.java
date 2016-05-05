@@ -18,12 +18,12 @@ public class Server {
 
     private int port;
 
-    private boolean keepGoing = true;
+    private boolean keepServerRunning;
 
     private ArrayList<ClientThread> clientThreads = new ArrayList<>();
 
     // to display time
-    private SimpleDateFormat simpleDateFormat;
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
 
     // if I am in a GUI
     private ServerGUI serverGUI;
@@ -31,17 +31,13 @@ public class Server {
     // a unique ID for each connection
     private int uniqueId;
 
-    public Server(int port){
-        this.port = port;
-    }
-
     public Server(int port, ServerGUI serverGUI){
         this.port = port;
         this.serverGUI = serverGUI;
     }
 
     public void start() {
-        keepGoing = true;
+        keepServerRunning = true;
         // create socket server and wait for connection requests
         try
         {
@@ -52,28 +48,29 @@ public class Server {
             display("Server waiting for Clients on port " + port + ".");
 
             // infinite loop to wait for connections
-            while(keepGoing)
-            {
-                Socket socket = serverSocket.accept();      // accept connection
-                // if I was asked to stop
-                if(!keepGoing)
-                    break;
-                ClientThread clientThread = new ClientThread(socket);  // make a thread of it
-                clientThreads.add(clientThread);       // save it in the ArrayList
+            while(keepServerRunning) {
+                System.out.println("testing");
+                // accept connection
+                Socket socket = serverSocket.accept();
+                // make a thread of it
+                ClientThread clientThread = new ClientThread(socket);
+                // save it in the ArrayList
+                clientThreads.add(clientThread);
                 clientThread.start();
             }
             // I was asked to stop
             try {
                 serverSocket.close();
-                for(int i = 0; i < clientThreads.size(); ++i) {
+                for(int i = 0; i < clientThreads.size(); i++) {
                     ClientThread clientThread = clientThreads.get(i);
                     try {
                         clientThread.sInput.close();
                         clientThread.sOutput.close();
                         clientThread.socket.close();
+                        System.out.println("testing2");
                     }
                     catch(IOException e) {
-                        // not much I can do
+                        System.out.println("Problem closing clientThread.");
                     }
                 }
             }
@@ -92,23 +89,13 @@ public class Server {
      * Display an event (not a message) to the console or the GUI
      */
     private void display(String msg) {
-        simpleDateFormat = new SimpleDateFormat();
         String time = simpleDateFormat.format(new Date()) + " " + msg;
         serverGUI.appendEvent(time);
     }
 
     // For the GUI to stop the server
-
     protected void stop() {
-        keepGoing = false;
-        // connect to myself as Client to exit statement
-        // Socket socket = serverSocket.accept();
-        try {
-            new Socket("localhost", port);
-        }
-        catch(Exception e) {
-            // nothing I can really do
-        }
+        keepServerRunning = false;
     }
 
     private synchronized void broadcast(ChatMessage chatMessage) {
@@ -138,10 +125,6 @@ public class Server {
                 return;
             }
         }
-    }
-
-    public void setKeepGoing(boolean keepGoing) {
-        this.keepGoing = keepGoing;
     }
 
     // One instance of this thread will run for each client
@@ -203,13 +186,11 @@ public class Server {
                     case ChatMessage.MESSAGE:
                         chatMessage.setSender(username);
                         broadcast(chatMessage);
-                        //broadcast(username + ": " + message);
                         break;
                     case ChatMessage.LOGOUT:
                         display(username + " disconnected with a LOGOUT message.");
                         keepGoing = false;
                         this.close();
-                        // TODO: 2016-04-10 remove the clientThread
                         break;
                     case ChatMessage.WHOISIN:
                         writeMsg("\nList of the users connected at " + simpleDateFormat.format(new Date()));
@@ -267,7 +248,6 @@ public class Server {
             // if an error occurs, do not abort just inform the user
             catch(IOException e) {
                 display("Error sending message to " + username);
-                display(e.toString());
             }
             return false;
         }

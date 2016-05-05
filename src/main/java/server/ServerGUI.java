@@ -13,10 +13,15 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by Michael on 2016-02-27.
  */
 public class ServerGUI {
+
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
 
     final HBox hb = new HBox();
 
@@ -39,8 +44,6 @@ public class ServerGUI {
         Stage primaryStage = new Stage();
         Scene scene = new Scene(new Group());
         primaryStage.setTitle("Server GUI");
-        //primaryStage.setWidth(530);
-        //primaryStage.setHeight(490);
 
         portNo = new TextField();
         Label portLabel = new Label("Port Number:");
@@ -64,12 +67,10 @@ public class ServerGUI {
         eventLog.setScrollTop(100);
 
         hb.setSpacing(3);
-        //hb.setPadding(new Insets(10, 0, 0, 10));
         hb.getChildren().addAll(portLabel, portNo, startButton);
         hb.setCenterShape(true);
 
         vbox.setSpacing(5);
-        //vbox.setPadding(new Insets(10, 0, 0, 10));
         vbox.getChildren().addAll(chatArea, eventLog);
         vbox.setCenterShape(true);
 
@@ -137,10 +138,6 @@ public class ServerGUI {
         });
     }
 
-    public Server getServer() {
-        return server;
-    }
-
     void startButtonStyleClass(){
         startButton.getStyleClass().clear();
         startButton.getStyleClass().add("button");
@@ -159,7 +156,7 @@ public class ServerGUI {
             //Server has either crashed or been manually stopped
             startButton.setText("Start");
             portNo.setEditable(true);
-            appendEvent("Server stopped!");
+            appendEvent(simpleDateFormat.format(new Date()) + " Server stopped!");
             server = null;
         }
     }

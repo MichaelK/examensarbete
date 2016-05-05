@@ -28,8 +28,6 @@ public class Client {
     private int port;
     private byte[] symmetricKey;
 
-    private boolean isServer;
-
     private DatapackageGenerator datapackageGenerator;
     private HashGenerator hashGenerator;
 
@@ -93,10 +91,8 @@ public class Client {
 
     // To send a message to the console or the GUI
     private void display(String msg) {
-        if(secureChatUI == null)
-            System.out.println("display secureChatUI == null");      // println in console mode
-        else
-            secureChatUI.append(msg);      // append to the ClientGUI TextArea
+        // append to the ClientGUI TextArea
+        secureChatUI.append(msg);
     }
 
 
@@ -137,10 +133,6 @@ public class Client {
             if(socket != null) socket.close();
         }
         catch(Exception e) {}
-    }
-
-    public boolean isServer() {
-        return isServer;
     }
 
     /*
