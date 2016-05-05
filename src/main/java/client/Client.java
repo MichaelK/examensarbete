@@ -54,7 +54,7 @@ public class Client {
             return false;
         }
 
-        String msg = "Connection accepted " + socket.getInetAddress() + ":" + socket.getPort() + "\n";
+        String msg = "Connection accepted " + socket.getInetAddress() + ":" + socket.getPort();
         System.out.println(msg);
         display(msg);
 
@@ -64,8 +64,8 @@ public class Client {
             sOutput = new ObjectOutputStream(socket.getOutputStream());
             sInput  = new ObjectInputStream(socket.getInputStream());
         }
-        catch (IOException eIO) {
-            display("Exception creating new Input/output Streams: " + eIO);
+        catch (IOException e) {
+            display("Exception creating new Input/output Streams: " + e);
             return false;
         }
 
@@ -110,7 +110,6 @@ public class Client {
                 chatMessage.setMessage(generateMsg);
                 break;
             case ChatMessage.LOGOUT:
-                display("Connection is closed!" + "\n");
                 chatMessage.setMessage(message);
                 break;
             case ChatMessage.WHOISIN:
@@ -121,7 +120,7 @@ public class Client {
             sOutput.writeObject(chatMessage);
         }
         catch(IOException e) {
-            display("Exception sending message to server: " + e + "\n");
+            display("Exception sending message to server: " + e);
         }
     }
 
@@ -140,10 +139,6 @@ public class Client {
         catch(Exception e) {}
     }
 
-    public static void main(String[] args) {
-
-    }
-
     public boolean isServer() {
         return isServer;
     }
@@ -154,25 +149,28 @@ public class Client {
      */
     class ServerListener extends Thread {
 
+        Boolean keepRunning = true;
         public void run() {
-            while(true) {
+            while(keepRunning) {
                 try {
                     Object obj = sInput.readObject();
                     if (obj.getClass().equals(ChatMessage.class)){
                         ChatMessage chatMessage = (ChatMessage) obj;
                         String msg = chatMessage.getMessage();
                         String openMsg = datapackageGenerator.openDatapackage(msg, symmetricKey);
-                        secureChatUI.append(chatMessage.getSender() + " : " + openMsg + "\n");
+                        secureChatUI.append(chatMessage.getSender() + " : " + openMsg);
                     }else if (obj.getClass().equals(String.class)){
                         String msg = (String) obj;
                         secureChatUI.append(msg);
                     }
                 }
                 catch(IOException e) {
-                    //display("Server has close the connection: " + e);
+                    display("No connection to the server established. " + e);
+                    keepRunning = false;
                 }
                 catch(ClassNotFoundException e) {
                     System.out.println("ClassNotFoundException i ServerListener!");
+                    keepRunning = false;
                 }
             }
         }

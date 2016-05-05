@@ -97,6 +97,7 @@ public class ServerGUI {
             server = null;
             startButton.setText("Start");
             startButtonStyleClass();
+            portNo.setEditable(true);
             return;
         }
         // OK start the server
@@ -106,7 +107,6 @@ public class ServerGUI {
         }
         catch(Exception ex) {
             appendEvent("Invalid port number");
-            System.out.println("Invalid port number");
             return;
         }
         // ceate a new Server
@@ -123,18 +123,16 @@ public class ServerGUI {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                chatArea.appendText(str);
-                chatArea.positionCaret(chatArea.getText().length() - 1);
+                chatArea.appendText(str + "\n");
             }
         });
     }
 
-    void appendEvent(String str) {
+    void appendEvent(String event) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                eventLog.appendText(str);
-                eventLog.positionCaret(eventLog.getText().length() - 1);
+                eventLog.appendText(event + "\n");
             }
         });
     }
@@ -161,7 +159,7 @@ public class ServerGUI {
             //Server has either crashed or been manually stopped
             startButton.setText("Start");
             portNo.setEditable(true);
-            appendEvent("Server stopped!\n");
+            appendEvent("Server stopped!");
             server = null;
         }
     }

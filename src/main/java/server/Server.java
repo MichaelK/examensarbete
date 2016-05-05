@@ -72,7 +72,7 @@ public class Server {
                         clientThread.sOutput.close();
                         clientThread.socket.close();
                     }
-                    catch(IOException ex) {
+                    catch(IOException e) {
                         // not much I can do
                     }
                 }
@@ -82,8 +82,8 @@ public class Server {
             }
         }
         // something went bad
-        catch (IOException ex) {
-            String msg = simpleDateFormat.format(new Date()) + " Exception on creating ServerSocket: " + ex + "\n";
+        catch (IOException e) {
+            String msg = simpleDateFormat.format(new Date()) + " Exception on creating ServerSocket: " + e;
             display(msg);
         }
     }
@@ -94,7 +94,7 @@ public class Server {
     private void display(String msg) {
         simpleDateFormat = new SimpleDateFormat();
         String time = simpleDateFormat.format(new Date()) + " " + msg;
-        serverGUI.appendEvent(time + "\n");
+        serverGUI.appendEvent(time);
     }
 
     // For the GUI to stop the server
@@ -113,10 +113,10 @@ public class Server {
 
     private synchronized void broadcast(ChatMessage chatMessage) {
         //Show undecrypted message in the ServerGUI
-        this.serverGUI.appendRoom(chatMessage.getSender() + " : " + chatMessage.getMessage() + "\n");
+        this.serverGUI.appendRoom(chatMessage.getSender() + " : " + chatMessage.getMessage());
         // add HH:mm:ss and \n to the message
         String time = simpleDateFormat.format(new Date());
-        String msg = time + ": " + chatMessage.getMessage() + "\n";
+        //String msg = time + ": " + chatMessage.getMessage() + "\n";
         //send message to all in chat and remove those that have disconnected
         for(int i = 0; i < clientThreads.size(); i++){
             ClientThread clientThread = clientThreads.get(i);
@@ -212,7 +212,7 @@ public class Server {
                         // TODO: 2016-04-10 remove the clientThread
                         break;
                     case ChatMessage.WHOISIN:
-                        writeMsg("List of the users connected at " + simpleDateFormat.format(new Date()) + "\n");
+                        writeMsg("\nList of the users connected at " + simpleDateFormat.format(new Date()));
                         //scan all the users connected
                         for(int i = 0; i < clientThreads.size(); ++i) {
                             ClientThread clientThread = clientThreads.get(i);
