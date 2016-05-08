@@ -112,12 +112,12 @@ public class SecureChatUI extends Application{
         });
 
         chatMessage = new TextField();
-        chatMessage.getStyleClass().add("chatMessage");
+        chatMessage.getStyleClass().add("textField");
         chatMessage.setPromptText("Enter your chatmessage here!");
         chatMessage.setPrefWidth(420);
 
         chatRoom = new TextArea();
-        chatRoom.getStyleClass().add("chatRoom");
+        chatRoom.getStyleClass().add("textArea");
         //chatRoom.setPromptText("Welcome to the chatroom!");
         chatRoom.setPrefWidth(420);
         chatRoom.setEditable(false);

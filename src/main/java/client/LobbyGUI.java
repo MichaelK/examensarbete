@@ -35,6 +35,7 @@ public class LobbyGUI {
 
         lobbyArea = new TextArea();
         lobbyArea.setPromptText("Lobby");
+        lobbyArea.getStyleClass().add("textArea");
         lobbyArea.setEditable(false);
 
         updateLobby = new Button("Update Lobby");

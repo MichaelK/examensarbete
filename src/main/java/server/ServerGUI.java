@@ -50,9 +50,10 @@ public class ServerGUI {
 
         Stage primaryStage = new Stage();
         Scene scene = new Scene(new Group());
-        primaryStage.setTitle("Server GUI");
+        primaryStage.setTitle("Server");
 
         portNo = new TextField();
+        portNo.getStyleClass().add("textField");
         Label portLabel = new Label("Port Number:");
         portLabel.setFont(new Font("Arial", 12));
         portNo.setPromptText("Port No ");
@@ -75,10 +76,12 @@ public class ServerGUI {
 
         chatArea = new TextArea();
         chatArea.setPromptText("Chatroom");
+        chatArea.getStyleClass().add("textArea");
         chatArea.setEditable(false);
 
         eventLog = new TextArea();
         eventLog.setPromptText("Eventlog");
+        eventLog.getStyleClass().add("textArea");
         eventLog.setEditable(false);
         eventLog.setScrollTop(100);
 

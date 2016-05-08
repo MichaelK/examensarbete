@@ -39,15 +39,19 @@ public class LoginGUI {
 
         Label lblAlias = new Label("Alias");
         final TextField txtAlias = new TextField();
+        txtAlias.getStyleClass().add("textField");
         txtAlias.setPromptText("Alias");
         Label lblServerIp = new Label("Server IP");
         final TextField txtServerIp = new TextField();
+        txtServerIp.getStyleClass().add("textField");
         txtServerIp.setPromptText("Server IP");
         Label lblPort = new Label("Port No");
         final TextField txtPort = new TextField();
+        txtPort.getStyleClass().add("textField");
         txtPort.setPromptText("Port No");
         Label lblPassword = new Label("Password");
         final PasswordField passwordField = new PasswordField();
+        passwordField.getStyleClass().add("textField");
         passwordField.setPromptText("Password");
         Button loginButton = new Button("Login");
         loginButton.setDefaultButton(true);
