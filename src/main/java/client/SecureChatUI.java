@@ -103,8 +103,10 @@ public class SecureChatUI extends Application{
         sendButton.setDefaultButton(true);
         sendButton.setOnAction((event) -> {
             if(this.client != null){
-                ChatMessage message = new ChatMessage(1, chatMessage.getText());
-                this.client.sendMessage(message);
+                if(!chatMessage.getText().equals("")){
+                    ChatMessage message = new ChatMessage(1, chatMessage.getText());
+                    this.client.sendMessage(message);
+                }
             }else{
                 append("Need to connect to a server before sending messages!");
             }
