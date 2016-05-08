@@ -173,7 +173,7 @@ public class Server {
             // have to catch ClassNotFoundException
             catch (ClassNotFoundException e) {
             }
-            date = new Date().toString() + "\n";
+            date = new Date().toString();
         }
 
         // what will run forever

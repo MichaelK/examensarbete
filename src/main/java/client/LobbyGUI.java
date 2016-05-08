@@ -71,7 +71,7 @@ public class LobbyGUI {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                lobbyArea.appendText(str);
+                lobbyArea.appendText(str + "\n");
             }
         });
     }
