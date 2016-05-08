@@ -44,6 +44,11 @@ public class LobbyGUI {
 
         });
 
+        primaryStage.setOnCloseRequest(event -> {
+            this.secureChatUI.setLobbyGUI(null);
+            primaryStage.close();
+        });
+
         vBox.setSpacing(3);
         vBox.getChildren().addAll(lobbyArea, updateLobby);
         vBox.setCenterShape(true);

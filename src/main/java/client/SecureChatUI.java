@@ -25,6 +25,7 @@ public class SecureChatUI extends Application{
 
     private ServerGUI serverGUI;
     private LobbyGUI lobbyGUI;
+    private LoginGUI loginGUI;
 
     private TextArea chatRoom;
     private TextField chatMessage;
@@ -55,8 +56,10 @@ public class SecureChatUI extends Application{
         connectButtonStyleClass();
         connectButton.setOnAction((event) -> {
             if(connectButton.getText().equals("Connect")){
-                LoginGUI loginGUI = new LoginGUI(this);
-                loginGUI.start();
+                if(this.loginGUI == null){
+                    this.loginGUI = new LoginGUI(this);
+                    this.loginGUI.start();
+                }
             }else{
                 ChatMessage message = new ChatMessage(2, chatMessage.getText());
                 this.client.sendMessage(message);
@@ -69,7 +72,7 @@ public class SecureChatUI extends Application{
         startServerButton = new Button("Start Server");
         startServerButton.getStyleClass().add("startServerButton");
         startServerButton.setOnAction((event) -> {
-            serverGUI = new ServerGUI();
+            serverGUI = new ServerGUI(this);
             serverGUI.start();
         });
 
@@ -77,13 +80,21 @@ public class SecureChatUI extends Application{
         showLobbyButton.getStyleClass().add("showLobbyButton");
         showLobbyButton.setOnAction((event) ->{
             if(this.client != null){
+                if(this.lobbyGUI != null){
+                    lobbyGUI.clearLobby();
+                    ChatMessage message = new ChatMessage(0, chatMessage.getText());
+                    this.client.sendMessage(message);
+                }else{
+                    lobbyGUI = new LobbyGUI(this);
+                    lobbyGUI.start();
+                    lobbyGUI.clearLobby();
+                    ChatMessage message = new ChatMessage(0, chatMessage.getText());
+                    this.client.sendMessage(message);
+                }
+            }else{
                 lobbyGUI = new LobbyGUI(this);
                 lobbyGUI.start();
-                lobbyGUI.clearLobby();
-                ChatMessage message = new ChatMessage(0, chatMessage.getText());
-                this.client.sendMessage(message);
-            }else{
-                append("You need to be connected to a server to see the lobby.");
+                lobbyGUI.appendToLobby("You are not connected to a server.");
             }
         });
 
@@ -149,12 +160,21 @@ public class SecureChatUI extends Application{
     }
 
     void login(String alias, String serverIp, int portNo, String password){
+        try{
             // try creating a new Client with GUI
-            client = new Client(serverIp, portNo, alias, password, this);
-            client.start();
-            connectButton.setText("Logout");
-            connectButtonStyleClass();
-            clearChatroom();
+            this.client = new Client(serverIp, portNo, alias, password, this);
+            boolean success = this.client.start();
+            if (success){
+                connectButton.setText("Logout");
+                connectButtonStyleClass();
+                clearChatroom();
+            }else{
+                this.client = null;
+            }
+        }catch(Exception e){
+            append("Error trying to login. Please input correct information.");
+            this.client = null;
+        }
     }
 
     // called by the Client to append text in the TextArea
@@ -206,5 +226,26 @@ public class SecureChatUI extends Application{
     public LobbyGUI getLobbyGUI() {
         return lobbyGUI;
     }
+
+    public void setLobbyGUI(LobbyGUI lobbyGUI) {
+        this.lobbyGUI = lobbyGUI;
+    }
+
+    public ServerGUI getServerGUI() {
+        return serverGUI;
+    }
+
+    public void setServerGUI(ServerGUI serverGUI) {
+        this.serverGUI = serverGUI;
+    }
+
+    public LoginGUI getLoginGUI() {
+        return loginGUI;
+    }
+
+    public void setLoginGUI(LoginGUI loginGUI) {
+        this.loginGUI = loginGUI;
+    }
+
 
 }

@@ -66,10 +66,16 @@ public class LoginGUI {
         loginButton.setOnAction((event) ->{
             try{
                 this.secureChatUI.login(txtAlias.getText(), txtServerIp.getText(), Integer.parseInt(txtPort.getText()), passwordField.getText());
+                this.secureChatUI.setLoginGUI(null);
                 primaryStage.close();
             }catch(Exception e) {
                 this.secureChatUI.append("Login failed. All fields need to be input correctly.");
             }
+        });
+
+        primaryStage.setOnCloseRequest(event -> {
+            this.secureChatUI.setLoginGUI(null);
+            primaryStage.close();
         });
 
         hb.getChildren().addAll(gridPane);

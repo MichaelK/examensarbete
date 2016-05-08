@@ -1,5 +1,6 @@
 package server;
 
+import client.SecureChatUI;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -39,6 +40,12 @@ public class ServerGUI {
     TextArea chatArea;
     TextArea eventLog;
 
+    private SecureChatUI secureChatUI;
+
+    public ServerGUI(SecureChatUI secureChatUI){
+        this.secureChatUI = secureChatUI;
+    }
+
     public void start(){
 
         Stage primaryStage = new Stage();
@@ -56,6 +63,14 @@ public class ServerGUI {
         startButtonStyleClass();
         startButton.setOnAction((event) ->{
             startStopButton();
+        });
+
+        primaryStage.setOnCloseRequest(event -> {
+            if(this.server != null){
+                this.server.stop();
+            }
+            this.secureChatUI.setServerGUI(null);
+            primaryStage.close();
         });
 
         chatArea = new TextArea();
