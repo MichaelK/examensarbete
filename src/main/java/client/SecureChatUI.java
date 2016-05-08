@@ -76,6 +76,8 @@ public class SecureChatUI extends Application{
         showLobbyButton.getStyleClass().add("showLobbyButton");
         showLobbyButton.setOnAction((event) ->{
             if(this.client != null){
+                LobbyGUI lobbyGUI = new LobbyGUI(this);
+                lobbyGUI.start();
                 ChatMessage message = new ChatMessage(0, chatMessage.getText());
                 this.client.sendMessage(message);
             }else{

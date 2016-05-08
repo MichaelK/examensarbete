@@ -26,7 +26,7 @@ public class LoginGUI {
 
         Stage primaryStage = new Stage();
         Scene scene = new Scene(new Group());
-        primaryStage.setTitle("Login GUI");
+        primaryStage.setTitle("Login");
 
         HBox hb = new HBox();
         //hb.setPadding(new Insets(20,20,20,20));
