@@ -247,5 +247,13 @@ public class SecureChatUI extends Application{
         this.loginGUI = loginGUI;
     }
 
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
 
 }

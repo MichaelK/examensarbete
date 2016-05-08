@@ -36,6 +36,10 @@
     -fx-background-color: crimson;
 }
 
+.updateLobbyButton{
+    -fx-background-color: chartreuse;
+}
+
 .button{
     -fx-font-family: sans-serif;
     -fx-text-fill: rgb(49, 89, 23);

@@ -37,11 +37,19 @@ public class LobbyGUI {
         lobbyArea.setPromptText("Lobby");
         lobbyArea.setEditable(false);
 
-        updateLobby = new Button("Start");
+        updateLobby = new Button("Update Lobby");
+        updateLobby.setCenterShape(true);
         updateLobby.setDefaultButton(true);
-        //startButtonStyleClass();
+        updateLobby.getStyleClass().add("updateLobbyButton");
         updateLobby.setOnAction((event) ->{
-
+            if(this.secureChatUI.getClient() != null){
+                clearLobby();
+                ChatMessage message = new ChatMessage(0, "text");
+                this.secureChatUI.getClient().sendMessage(message);
+            }else{
+                clearLobby();
+                appendToLobby("You are not connected to a server.");
+            }
         });
 
         primaryStage.setOnCloseRequest(event -> {
