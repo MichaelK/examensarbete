@@ -14,7 +14,7 @@ public class ChatMessage implements Serializable {
     protected static final long serialVersionUID = 1L;
 
     //lists connected users
-    public static final int WHOISIN = 0;
+    public static final int LOBBY = 0;
 
     //a normal message
     public static final int MESSAGE = 1;

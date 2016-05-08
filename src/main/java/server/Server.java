@@ -7,7 +7,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -204,8 +203,8 @@ public class Server {
                         keepGoing = false;
                         this.close();
                         break;
-                    case ChatMessage.WHOISIN:
-                        writeMsg("\nList of the users connected at " + simpleDateFormat.format(new Date()));
+                    case ChatMessage.LOBBY:
+                        writeMsg("List of the users connected at " + simpleDateFormat.format(new Date()));
                         //scan all the users connected
                         for (int i = 0; i < clientThreads.size(); ++i) {
                             ClientThread clientThread = clientThreads.get(i);

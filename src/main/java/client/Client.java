@@ -1,6 +1,5 @@
 package client;
 
-import org.bouncycastle.util.encoders.Hex;
 import services.datapackage.DatapackageGenerator;
 import services.datapackage.DatapackageGeneratorImpl;
 import services.hash.HashGenerator;
@@ -108,7 +107,7 @@ public class Client {
             case ChatMessage.LOGOUT:
                 chatMessage.setMessage(message);
                 break;
-            case ChatMessage.WHOISIN:
+            case ChatMessage.LOBBY:
                 chatMessage.setMessage(message);
                 break;
         }
@@ -157,7 +156,7 @@ public class Client {
                         secureChatUI.append(chatMessage.getSender() + " : " + openMsg);
                     }else if (obj.getClass().equals(String.class)){
                         String msg = (String) obj;
-                        secureChatUI.append(msg);
+                        secureChatUI.getLobbyGUI().appendToLobby(msg);
                     }
                 }
                 catch(IOException e) {

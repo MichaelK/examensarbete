@@ -24,6 +24,7 @@ public class SecureChatUI extends Application{
     private Client client;
 
     private ServerGUI serverGUI;
+    private LobbyGUI lobbyGUI;
 
     private TextArea chatRoom;
     private TextField chatMessage;
@@ -76,8 +77,9 @@ public class SecureChatUI extends Application{
         showLobbyButton.getStyleClass().add("showLobbyButton");
         showLobbyButton.setOnAction((event) ->{
             if(this.client != null){
-                LobbyGUI lobbyGUI = new LobbyGUI(this);
+                lobbyGUI = new LobbyGUI(this);
                 lobbyGUI.start();
+                lobbyGUI.clearLobby();
                 ChatMessage message = new ChatMessage(0, chatMessage.getText());
                 this.client.sendMessage(message);
             }else{
@@ -200,4 +202,9 @@ public class SecureChatUI extends Application{
             }
         });
     }
+
+    public LobbyGUI getLobbyGUI() {
+        return lobbyGUI;
+    }
+
 }

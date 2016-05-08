@@ -52,7 +52,11 @@
     -fx-background-image: url("background.jpg");
 }
 
-.vbox2{
+.vboxServer{
+    -fx-background-image: url("background.jpg");
+}
+
+.hboxLobby{
     -fx-background-image: url("background.jpg");
 }
 

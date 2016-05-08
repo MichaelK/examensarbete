@@ -75,7 +75,7 @@ public class ServerGUI {
         vbox.getChildren().addAll(chatArea, eventLog);
         vbox.setCenterShape(true);
 
-        vbox2.getStyleClass().add("vbox2");
+        vbox2.getStyleClass().add("vboxServer");
         vbox2.setSpacing(5);
         vbox2.setPadding(new Insets(25, 25, 25, 25));
         vbox2.getChildren().addAll(hb,vbox);

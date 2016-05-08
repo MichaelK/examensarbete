@@ -1,11 +1,13 @@
 package client;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -14,6 +16,9 @@ import javafx.stage.Stage;
 public class LobbyGUI {
 
     SecureChatUI secureChatUI;
+
+    TextArea lobbyArea;
+    Button updateLobby;
 
     public LobbyGUI(SecureChatUI secureChatUI){
         this.secureChatUI = secureChatUI;
@@ -25,32 +30,49 @@ public class LobbyGUI {
         Scene scene = new Scene(new Group());
         primaryStage.setTitle("Lobby");
 
-        HBox hb = new HBox();
+        HBox hBox = new HBox();
+        VBox vBox = new VBox();
 
-        GridPane gridPane = new GridPane();
-        gridPane.getStyleClass().add("gridPane");
-        gridPane.setPadding(new Insets(20,20,20,20));
-        gridPane.setHgap(5);
-        gridPane.setVgap(5);
+        lobbyArea = new TextArea();
+        lobbyArea.setPromptText("Lobby");
+        lobbyArea.setEditable(false);
 
-        Label lblAlias = new Label("Alias");
-        Label lblConnectedSince = new Label("Connected since");
-        Label lblone = new Label("One");
-        Label lbltwo = new Label("Two");
+        updateLobby = new Button("Start");
+        updateLobby.setDefaultButton(true);
+        //startButtonStyleClass();
+        updateLobby.setOnAction((event) ->{
 
-        gridPane.add(lblAlias, 0, 0);
-        gridPane.add(lblConnectedSince, 1, 0);
-        gridPane.add(lblone, 0, 1);
-        gridPane.add(lbltwo, 1, 1);
+        });
 
-        hb.getChildren().addAll(gridPane);
-        
-        ((Group) scene.getRoot()).getChildren().addAll(hb);
+        vBox.setSpacing(3);
+        vBox.getChildren().addAll(lobbyArea, updateLobby);
+        vBox.setCenterShape(true);
+
+        hBox.getStyleClass().add("hboxLobby");
+        hBox.setSpacing(5);
+        hBox.setPadding(new Insets(25, 25, 25, 25));
+        hBox.getChildren().addAll(vBox);
+        hBox.setCenterShape(true);
+
+        ((Group) scene.getRoot()).getChildren().addAll(hBox);
 
         primaryStage.setScene(scene);
 
         scene.getStylesheets().add("myCSS.css");
 
         primaryStage.show();
+    }
+
+    void clearLobby(){
+        lobbyArea.clear();
+    }
+
+    void appendToLobby(String str) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                lobbyArea.appendText(str);
+            }
+        });
     }
 }
