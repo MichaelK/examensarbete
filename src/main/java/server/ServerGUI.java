@@ -99,6 +99,7 @@ public class ServerGUI {
             startButton.setText("Start");
             startButtonStyleClass();
             portNo.setEditable(true);
+            appendEvent(simpleDateFormat.format(new Date()) + " Server stopped!");
             return;
         }
         // OK start the server
@@ -113,7 +114,7 @@ public class ServerGUI {
         // ceate a new Server
         server = new Server(port, this);
         // and start it as a thread
-        new ServerRunning().start();
+        //new ServerRunning().start();
         startButton.setText("Stop");
         startButtonStyleClass();
         portNo.setEditable(false);
@@ -147,18 +148,4 @@ public class ServerGUI {
             startButton.getStyleClass().add("stopButton");
         }
     }
-
-    // A thread to run the Server
-    class ServerRunning extends Thread {
-        public void run() {
-            //Start server and keep it alive until manually stopped
-            server.start();
-            //Server has either crashed or been manually stopped
-            startButton.setText("Start");
-            portNo.setEditable(true);
-            appendEvent(simpleDateFormat.format(new Date()) + " Server stopped!");
-            server = null;
-        }
-    }
-
 }

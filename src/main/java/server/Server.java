@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,7 +19,7 @@ public class Server {
 
     private int port;
 
-    private boolean keepServerRunning;
+    private volatile boolean running;
 
     private ArrayList<ClientThread> clientThreads = new ArrayList<>();
 
@@ -31,59 +32,52 @@ public class Server {
     // a unique ID for each connection
     private int uniqueId;
 
-    public Server(int port, ServerGUI serverGUI){
+    private Thread thread;
+    private ServerSocket serverSocket;
+
+    public Server(int port, ServerGUI serverGUI) {
         this.port = port;
         this.serverGUI = serverGUI;
+        start();
     }
 
-    public void start() {
-        keepServerRunning = true;
+    public synchronized void start() {
         // create socket server and wait for connection requests
-        try
-        {
+        try {
             // the socket used by the server
-            ServerSocket serverSocket = new ServerSocket(port);
+            serverSocket = new ServerSocket(port);
 
             // format message saying we are waiting
             display("Server waiting for Clients on port " + port + ".");
 
-            // infinite loop to wait for connections
-            while(keepServerRunning) {
-                System.out.println("testing");
-                // accept connection
-                Socket socket = serverSocket.accept();
-                // make a thread of it
-                ClientThread clientThread = new ClientThread(socket);
-                // save it in the ArrayList
-                clientThreads.add(clientThread);
-                clientThread.start();
-            }
-            // I was asked to stop
-            try {
-                serverSocket.close();
-                for(int i = 0; i < clientThreads.size(); i++) {
-                    ClientThread clientThread = clientThreads.get(i);
-                    try {
-                        clientThread.sInput.close();
-                        clientThread.sOutput.close();
-                        clientThread.socket.close();
-                        System.out.println("testing2");
-                    }
-                    catch(IOException e) {
-                        System.out.println("Problem closing clientThread.");
-                    }
-                }
-            }
-            catch(Exception e) {
-                display("Exception closing the server and clients: " + e);
-            }
-        }
-        // something went bad
-        catch (IOException e) {
+            // something went bad
+        } catch (IOException e) {
             String msg = simpleDateFormat.format(new Date()) + " Exception on creating ServerSocket: " + e;
             display(msg);
         }
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    running = true;
+                    while (running) {
+                        System.out.println("testing");
+                        // accept connection
+                        Socket socket = serverSocket.accept();
+                        // make a thread of it
+                        ClientThread clientThread = new ClientThread(socket);
+                        // save it in the ArrayList
+                        clientThreads.add(clientThread);
+                        clientThread.start();
+                    }
+                } catch (IOException e) {
+                    // Do nothing.
+                }
+            }
+        });
+        thread.start();
     }
+
 
     /*
      * Display an event (not a message) to the console or the GUI
@@ -95,7 +89,29 @@ public class Server {
 
     // For the GUI to stop the server
     protected void stop() {
-        keepServerRunning = false;
+        if (thread == null) {
+            return;
+        }
+        running = false;
+
+        // I was asked to stop
+        try {
+            serverSocket.close();
+            for (int i = 0; i < clientThreads.size(); i++) {
+                ClientThread clientThread = clientThreads.get(i);
+                try {
+                    clientThread.sInput.close();
+                    clientThread.sOutput.close();
+                    clientThread.socket.close();
+                    System.out.println("testing2");
+                } catch (IOException e) {
+                    System.out.println("Problem closing clientThread.");
+                }
+            }
+        } catch (Exception e) {
+            display("Exception closing the server and clients: " + e);
+        }
+        display("All connections to server and serverSocket closed.");
     }
 
     private synchronized void broadcast(ChatMessage chatMessage) {
@@ -105,9 +121,9 @@ public class Server {
         String time = simpleDateFormat.format(new Date());
         //String msg = time + ": " + chatMessage.getMessage() + "\n";
         //send message to all in chat and remove those that have disconnected
-        for(int i = 0; i < clientThreads.size(); i++){
+        for (int i = 0; i < clientThreads.size(); i++) {
             ClientThread clientThread = clientThreads.get(i);
-            if(!clientThread.writeMsg(chatMessage)){
+            if (!clientThread.writeMsg(chatMessage)) {
                 clientThreads.remove(i);
                 display(clientThread.username + " has disconnected from the chat!");
             }
@@ -117,10 +133,10 @@ public class Server {
     // for a client who logoff using the LOGOUT message
     synchronized void remove(int id) {
         // scan the array list until we found the Id
-        for(int i = 0; i < clientThreads.size(); ++i) {
+        for (int i = 0; i < clientThreads.size(); ++i) {
             ClientThread ct = clientThreads.get(i);
             // found it
-            if(ct.id == id) {
+            if (ct.id == id) {
                 clientThreads.remove(i);
                 return;
             }
@@ -144,16 +160,14 @@ public class Server {
         ClientThread(Socket socket) {
             id = ++uniqueId;
             this.socket = socket;
-            try
-            {
+            try {
                 // create output first
                 sOutput = new ObjectOutputStream(socket.getOutputStream());
-                sInput  = new ObjectInputStream(socket.getInputStream());
+                sInput = new ObjectInputStream(socket.getInputStream());
                 // read the username
                 username = (String) sInput.readObject();
                 display(username + " just connected.");
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 display("Exception creating new Input/output Streams: " + e);
                 return;
             }
@@ -167,22 +181,20 @@ public class Server {
         public void run() {
             // to loop until LOGOUT
             boolean keepGoing = true;
-            while(keepGoing) {
+            while (keepGoing) {
                 // read a String (which is an object)
                 try {
                     chatMessage = (ChatMessage) sInput.readObject();
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     display(username + " Exception reading Streams: " + e);
                     break;
-                }
-                catch(ClassNotFoundException e) {
+                } catch (ClassNotFoundException e) {
                     break;
                 }
                 // the message part of the ChatMessage
                 String message = chatMessage.getMessage();
                 // Switch on the type of message receive
-                switch(chatMessage.getType()) {
+                switch (chatMessage.getType()) {
                     case ChatMessage.MESSAGE:
                         chatMessage.setSender(username);
                         broadcast(chatMessage);
@@ -195,9 +207,9 @@ public class Server {
                     case ChatMessage.WHOISIN:
                         writeMsg("\nList of the users connected at " + simpleDateFormat.format(new Date()));
                         //scan all the users connected
-                        for(int i = 0; i < clientThreads.size(); ++i) {
+                        for (int i = 0; i < clientThreads.size(); ++i) {
                             ClientThread clientThread = clientThreads.get(i);
-                            writeMsg((i+1) + ") " + clientThread.username + " since " + clientThread.date);
+                            writeMsg((i + 1) + ") " + clientThread.username + " since " + clientThread.date);
                         }
                         break;
                 }
@@ -212,23 +224,23 @@ public class Server {
         private void close() {
             // try to close the connection
             try {
-                if(sOutput != null){
+                if (sOutput != null) {
                     sOutput.close();
                 }
+            } catch (Exception e) {
             }
-            catch(Exception e) {}
             try {
-                if(sInput != null){
+                if (sInput != null) {
                     sInput.close();
                 }
+            } catch (Exception e) {
             }
-            catch(Exception e) {}
             try {
-                if(socket != null){
+                if (socket != null) {
                     socket.close();
                 }
+            } catch (Exception e) {
             }
-            catch (Exception e) {}
         }
 
 
@@ -236,17 +248,17 @@ public class Server {
         private boolean writeMsg(Object object) {
             // write the message to the stream
             try {
-                if (object.getClass().equals(ChatMessage.class)){
+                if (object.getClass().equals(ChatMessage.class)) {
                     ChatMessage chatMessage = (ChatMessage) object;
                     sOutput.writeObject(chatMessage);
-                }else if (object.getClass().equals(String.class)){
+                } else if (object.getClass().equals(String.class)) {
                     String msg = (String) object;
                     sOutput.writeObject(msg);
                 }
                 return true;
             }
             // if an error occurs, do not abort just inform the user
-            catch(IOException e) {
+            catch (IOException e) {
                 display("Error sending message to " + username);
             }
             return false;
