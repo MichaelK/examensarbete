@@ -52,6 +52,7 @@ public class ServerGUI {
         portNo.setEditable(true);
 
         startButton = new Button("Start");
+        startButton.setDefaultButton(true);
         startButtonStyleClass();
         startButton.setOnAction((event) ->{
             startStopButton();

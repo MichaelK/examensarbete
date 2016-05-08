@@ -50,6 +50,7 @@ public class LoginGUI {
         final PasswordField passwordField = new PasswordField();
         passwordField.setPromptText("Password");
         Button loginButton = new Button("Login");
+        loginButton.setDefaultButton(true);
         loginButton.getStyleClass().add("loginButton");
 
         gridPane.add(lblAlias, 0, 0);
@@ -63,8 +64,12 @@ public class LoginGUI {
         gridPane.add(loginButton, 1, 4);
 
         loginButton.setOnAction((event) ->{
-            this.secureChatUI.login(txtAlias.getText(), txtServerIp.getText(), Integer.parseInt(txtPort.getText()), passwordField.getText());
-            primaryStage.close();
+            try{
+                this.secureChatUI.login(txtAlias.getText(), txtServerIp.getText(), Integer.parseInt(txtPort.getText()), passwordField.getText());
+                primaryStage.close();
+            }catch(Exception e) {
+                this.secureChatUI.append("Login failed. All fields need to be input correctly.");
+            }
         });
 
         hb.getChildren().addAll(gridPane);
