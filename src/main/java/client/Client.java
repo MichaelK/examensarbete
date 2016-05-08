@@ -135,6 +135,10 @@ public class Client {
         catch(Exception e) {}
     }
 
+    public SecureChatUI getSecureChatUI() {
+        return this.secureChatUI;
+    }
+
     /*
      * a class that waits for the message from the server and append them to the TextArea
      * if we have a GUI or simply System.out.println() it in console mode
@@ -159,6 +163,7 @@ public class Client {
                 catch(IOException e) {
                     display("No connection to the server established. " + e);
                     keepRunning = false;
+                    getSecureChatUI().resetConnectButton();
                 }
                 catch(ClassNotFoundException e) {
                     System.out.println("ClassNotFoundException i ServerListener!");

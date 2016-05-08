@@ -27,6 +27,7 @@ public class SecureChatUI extends Application{
 
     private TextArea chatRoom;
     private TextField chatMessage;
+
     private Button connectButton;
     private Button startServerButton;
 
@@ -183,5 +184,18 @@ public class SecureChatUI extends Application{
         }else{
             connectButton.getStyleClass().add("logoutButton");
         }
+    }
+
+
+    void resetConnectButton(){
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                connectButton.setText("Connect");
+                connectButtonStyleClass();
+                client = null;
+            }
+        });
     }
 }

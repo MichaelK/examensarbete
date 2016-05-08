@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b99a9806-dfd3-4f88-a7a8-3ddf9ed1c56c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/server/Server.java" afterPath="$PROJECT_DIR$/src/main/java/server/Server.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/server/ServerGUI.java" afterPath="$PROJECT_DIR$/src/main/java/server/ServerGUI.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/Client.java" afterPath="$PROJECT_DIR$/src/main/java/client/Client.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/client/SecureChatUI.java" afterPath="$PROJECT_DIR$/src/main/java/client/SecureChatUI.java" />
     </list>
     <ignored path="SecureChat.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -62,8 +61,11 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/client/Client.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="160" column="40" selection-start-line="160" selection-start-column="40" selection-end-line="160" selection-end-column="40" />
-              <folding />
+              <caret line="159" column="39" selection-start-line="159" selection-start-column="39" selection-end-line="159" selection-end-column="39" />
+              <folding>
+                <element signature="e#4170#4171#0" expanded="true" />
+                <element signature="e#4210#4211#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -71,8 +73,8 @@
       <file leaf-file-name="SecureChatUI.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/client/SecureChatUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.83454543">
-              <caret line="69" column="38" selection-start-line="69" selection-start-column="38" selection-end-line="69" selection-end-column="38" />
+            <state vertical-scroll-proportion="0.33272728">
+              <caret line="156" column="9" selection-start-line="156" selection-start-column="9" selection-end-line="156" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -142,10 +144,10 @@
         <option value="$PROJECT_DIR$/src/test/java/client/SecureChatUITest.java" />
         <option value="$PROJECT_DIR$/src/test/java/server/ServerGUITest.java" />
         <option value="$PROJECT_DIR$/src/test/java/server/ServerTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/client/SecureChatUI.java" />
         <option value="$PROJECT_DIR$/src/main/java/server/Server.java" />
         <option value="$PROJECT_DIR$/src/main/java/server/ServerGUI.java" />
         <option value="$PROJECT_DIR$/src/main/java/client/Client.java" />
+        <option value="$PROJECT_DIR$/src/main/java/client/SecureChatUI.java" />
       </list>
     </option>
   </component>
@@ -1000,12 +1002,12 @@
       <workItem from="1462499102918" duration="13039000" />
       <workItem from="1462514049508" duration="1102000" />
       <workItem from="1462538538497" duration="1373000" />
-      <workItem from="1462640081775" duration="10223000" />
+      <workItem from="1462640081775" duration="12405000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="161780000" />
+    <option name="totallyTimeSpent" value="163962000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="297" y="8" width="1468" height="1000" extended-state="0" />
@@ -1410,14 +1412,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/server/Server.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="188" column="20" selection-start-line="188" selection-start-column="20" selection-end-line="188" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/server/ServerGUI.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1431,18 +1425,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/server/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="188" column="20" selection-start-line="188" selection-start-column="20" selection-end-line="188" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="160" column="40" selection-start-line="160" selection-start-column="40" selection-end-line="160" selection-end-column="40" />
-          <folding />
+          <caret line="159" column="39" selection-start-line="159" selection-start-column="39" selection-end-line="159" selection-end-column="39" />
+          <folding>
+            <element signature="e#4170#4171#0" expanded="true" />
+            <element signature="e#4210#4211#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/client/SecureChatUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.83454543">
-          <caret line="69" column="38" selection-start-line="69" selection-start-column="38" selection-end-line="69" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.33272728">
+          <caret line="156" column="9" selection-start-line="156" selection-start-column="9" selection-end-line="156" selection-end-column="9" />
           <folding />
         </state>
       </provider>
