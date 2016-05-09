@@ -1,6 +1,5 @@
 package client;
 
-import org.bouncycastle.util.encoders.Hex;
 import services.datapackage.DatapackageGenerator;
 import services.datapackage.DatapackageGeneratorImpl;
 import services.hash.HashGenerator;
@@ -9,6 +8,7 @@ import services.hash.HashGeneratorImpl;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
 
 /**
@@ -27,8 +27,6 @@ public class Client {
     private String username;
     private int port;
     private byte[] symmetricKey;
-
-    private boolean isServer;
 
     private DatapackageGenerator datapackageGenerator;
     private HashGenerator hashGenerator;
@@ -54,7 +52,7 @@ public class Client {
             return false;
         }
 
-        String msg = "Connection accepted " + socket.getInetAddress() + ":" + socket.getPort() + "\n";
+        String msg = "Connection accepted " + socket.getInetAddress() + ":" + socket.getPort();
         System.out.println(msg);
         display(msg);
 
@@ -64,8 +62,8 @@ public class Client {
             sOutput = new ObjectOutputStream(socket.getOutputStream());
             sInput  = new ObjectInputStream(socket.getInputStream());
         }
-        catch (IOException eIO) {
-            display("Exception creating new Input/output Streams: " + eIO);
+        catch (IOException e) {
+            display("Exception creating new Input/output Streams: " + e);
             return false;
         }
 
@@ -93,10 +91,8 @@ public class Client {
 
     // To send a message to the console or the GUI
     private void display(String msg) {
-        if(secureChatUI == null)
-            System.out.println("display secureChatUI == null");      // println in console mode
-        else
-            secureChatUI.append(msg);      // append to the ClientGUI TextArea
+        // append to the ClientGUI TextArea
+        secureChatUI.append(msg);
     }
 
 
@@ -110,10 +106,9 @@ public class Client {
                 chatMessage.setMessage(generateMsg);
                 break;
             case ChatMessage.LOGOUT:
-                display("Connection is closed!" + "\n");
                 chatMessage.setMessage(message);
                 break;
-            case ChatMessage.WHOISIN:
+            case ChatMessage.LOBBY:
                 chatMessage.setMessage(message);
                 break;
         }
@@ -121,7 +116,7 @@ public class Client {
             sOutput.writeObject(chatMessage);
         }
         catch(IOException e) {
-            display("Exception sending message to server: " + e + "\n");
+            display("Exception sending message to server: " + e);
         }
     }
 
@@ -140,12 +135,8 @@ public class Client {
         catch(Exception e) {}
     }
 
-    public static void main(String[] args) {
-
-    }
-
-    public boolean isServer() {
-        return isServer;
+    public SecureChatUI getSecureChatUI() {
+        return this.secureChatUI;
     }
 
     /*
@@ -154,25 +145,34 @@ public class Client {
      */
     class ServerListener extends Thread {
 
+        Boolean keepRunning = true;
         public void run() {
-            while(true) {
+            while(keepRunning) {
                 try {
                     Object obj = sInput.readObject();
                     if (obj.getClass().equals(ChatMessage.class)){
                         ChatMessage chatMessage = (ChatMessage) obj;
                         String msg = chatMessage.getMessage();
-                        String openMsg = datapackageGenerator.openDatapackage(msg, symmetricKey);
-                        secureChatUI.append(chatMessage.getSender() + " : " + openMsg + "\n");
+                        String openMsg;
+                        try {
+                            openMsg = datapackageGenerator.openDatapackage(msg, symmetricKey);
+                            secureChatUI.append(chatMessage.getSender() + " : " + openMsg);
+                        }catch (Exception e){
+                            secureChatUI.append(chatMessage.getSender() + " : " + "Message could not be decrypted. Check password.");
+                        }
                     }else if (obj.getClass().equals(String.class)){
                         String msg = (String) obj;
-                        secureChatUI.append(msg);
+                        secureChatUI.getLobbyGUI().appendToLobby(msg);
                     }
                 }
                 catch(IOException e) {
-                    //display("Server has close the connection: " + e);
+                    display("No connection to the server established. " + e);
+                    keepRunning = false;
+                    getSecureChatUI().resetConnectButton();
                 }
                 catch(ClassNotFoundException e) {
                     System.out.println("ClassNotFoundException i ServerListener!");
+                    keepRunning = false;
                 }
             }
         }

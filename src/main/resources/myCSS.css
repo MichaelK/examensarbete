@@ -1,8 +1,3 @@
-.root {
-    -fx-background-image: url("background.jpg");
-    -fx-background-color: #BDBDBD;
-}
-
 .connectButton{
     -fx-background-color: chartreuse;
 }
@@ -28,7 +23,15 @@
     -fx-background-color: chartreuse;
 }
 
-.stopStartButton{
+.startButton{
+    -fx-background-color: chartreuse;
+}
+
+.stopButton{
+    -fx-background-color: crimson;
+}
+
+.updateLobbyButton{
     -fx-background-color: chartreuse;
 }
 
@@ -48,18 +51,22 @@
     -fx-background-image: url("background.jpg");
 }
 
-.vbox2{
+.vboxServer{
     -fx-background-image: url("background.jpg");
 }
 
-.chatRoom{
+.hboxLobby{
+    -fx-background-image: url("background.jpg");
+}
+
+.textArea{
     -fx-font-family: sans-serif;
     -fx-prompt-text-fill: darkblue;
     -fx-border-color: black;
     -fx-border-style: solid;
 }
 
-.chatMessage{
+.textField{
     -fx-font-family: sans-serif;
     -fx-prompt-text-fill: darkseagreen;
     -fx-border-color: black;

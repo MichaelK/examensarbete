@@ -26,7 +26,7 @@ public class LoginGUI {
 
         Stage primaryStage = new Stage();
         Scene scene = new Scene(new Group());
-        primaryStage.setTitle("Login GUI");
+        primaryStage.setTitle("Login");
 
         HBox hb = new HBox();
         //hb.setPadding(new Insets(20,20,20,20));
@@ -39,17 +39,22 @@ public class LoginGUI {
 
         Label lblAlias = new Label("Alias");
         final TextField txtAlias = new TextField();
+        txtAlias.getStyleClass().add("textField");
         txtAlias.setPromptText("Alias");
         Label lblServerIp = new Label("Server IP");
         final TextField txtServerIp = new TextField();
+        txtServerIp.getStyleClass().add("textField");
         txtServerIp.setPromptText("Server IP");
         Label lblPort = new Label("Port No");
         final TextField txtPort = new TextField();
+        txtPort.getStyleClass().add("textField");
         txtPort.setPromptText("Port No");
         Label lblPassword = new Label("Password");
         final PasswordField passwordField = new PasswordField();
+        passwordField.getStyleClass().add("textField");
         passwordField.setPromptText("Password");
         Button loginButton = new Button("Login");
+        loginButton.setDefaultButton(true);
         loginButton.getStyleClass().add("loginButton");
 
         gridPane.add(lblAlias, 0, 0);
@@ -63,7 +68,17 @@ public class LoginGUI {
         gridPane.add(loginButton, 1, 4);
 
         loginButton.setOnAction((event) ->{
-            this.secureChatUI.login(txtAlias.getText(), txtServerIp.getText(), Integer.parseInt(txtPort.getText()), passwordField.getText());
+            try{
+                this.secureChatUI.login(txtAlias.getText(), txtServerIp.getText(), Integer.parseInt(txtPort.getText()), passwordField.getText());
+                this.secureChatUI.setLoginGUI(null);
+                primaryStage.close();
+            }catch(Exception e) {
+                this.secureChatUI.append("Login failed. All fields need to be input correctly.");
+            }
+        });
+
+        primaryStage.setOnCloseRequest(event -> {
+            this.secureChatUI.setLoginGUI(null);
             primaryStage.close();
         });
 
