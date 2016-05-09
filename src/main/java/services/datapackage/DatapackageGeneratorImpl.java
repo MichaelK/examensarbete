@@ -79,13 +79,4 @@ public class DatapackageGeneratorImpl implements DatapackageGenerator {
 
         return new String(messagePart);
     }
-
-//    public static void main(String[] args) {
-//        DatapackageGeneratorImpl datapackageGenerator = new DatapackageGeneratorImpl();
-//        String generate = datapackageGenerator.generateDatapackage("Räksmörgås!");
-//        System.out.println(generate);
-//        String open = datapackageGenerator.openDatapackage(generate);
-//        System.out.println(open);
-//
-//    }
 }

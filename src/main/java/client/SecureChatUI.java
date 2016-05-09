@@ -113,6 +113,15 @@ public class SecureChatUI extends Application{
             chatMessage.setText("");
         });
 
+        primaryStage.setOnCloseRequest(event -> {
+            if(this.client != null){
+                ChatMessage message = new ChatMessage(2, chatMessage.getText());
+                this.client.sendMessage(message);
+                this.client.disconnect();
+            }
+            primaryStage.close();
+        });
+
         chatMessage = new TextField();
         chatMessage.getStyleClass().add("textField");
         chatMessage.setPromptText("Enter your chatmessage here!");

@@ -153,8 +153,13 @@ public class Client {
                     if (obj.getClass().equals(ChatMessage.class)){
                         ChatMessage chatMessage = (ChatMessage) obj;
                         String msg = chatMessage.getMessage();
-                        String openMsg = datapackageGenerator.openDatapackage(msg, symmetricKey);
-                        secureChatUI.append(chatMessage.getSender() + " : " + openMsg);
+                        String openMsg;
+                        try {
+                            openMsg = datapackageGenerator.openDatapackage(msg, symmetricKey);
+                            secureChatUI.append(chatMessage.getSender() + " : " + openMsg);
+                        }catch (Exception e){
+                            secureChatUI.append(chatMessage.getSender() + " : " + "Message could not be decrypted. Check password.");
+                        }
                     }else if (obj.getClass().equals(String.class)){
                         String msg = (String) obj;
                         secureChatUI.getLobbyGUI().appendToLobby(msg);
