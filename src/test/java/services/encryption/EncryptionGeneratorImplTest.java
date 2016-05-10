@@ -24,7 +24,7 @@ public class EncryptionGeneratorImplTest {
         byte[] symmetricKey = "12345678123456781234567812345678".getBytes();
         // Encrypt the message.
         byte[] encryptedMessage = encryptionGenerator.encrypt(message, symmetricKey);
-        // Decrypte the encrypted message.
+        // Decrypt the encrypted message.
         byte[] decryptedMessage = encryptionGenerator.decrypt(encryptedMessage, symmetricKey);
         // Assert that the original message and decrypted are the same.
         Assert.assertArrayEquals(message, decryptedMessage);

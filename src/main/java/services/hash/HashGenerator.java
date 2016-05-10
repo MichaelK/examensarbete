@@ -35,5 +35,11 @@ public interface HashGenerator {
      */
     byte[] generate(final byte[] bytes, final int bits);
 
+    /**
+     * Makes a Sha3-512 bit hash but only returns a part of it with the length "bits".
+     * @param bytes
+     * @param bits
+     * @return
+     */
     byte[] hashToBits(final byte[] bytes, final int bits);
 }

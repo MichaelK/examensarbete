@@ -5,10 +5,11 @@ import java.util.Objects;
 import org.bouncycastle.jcajce.provider.digest.SHA3.DigestSHA3;
 
 /**
- * Created by mickal on 02/02/2016.
+ * Created by mickal on 01/04/2016.
  */
 public class HashGeneratorImpl implements HashGenerator {
 
+    // By default uses Sha3-512 bits.
     private static int DEFAULT = 512;
 
     /**
@@ -16,7 +17,7 @@ public class HashGeneratorImpl implements HashGenerator {
      * @param string
      * @return
      */
-    //@Override
+    @Override
     public byte[] generate(final String string) {
         return generate(string, DEFAULT);
     }
@@ -26,7 +27,7 @@ public class HashGeneratorImpl implements HashGenerator {
      * @param bytes
      * @return
      */
-    //@Override
+    @Override
     public byte[] generate(final byte[] bytes) {
         return generate(bytes, DEFAULT);
     }
@@ -37,7 +38,7 @@ public class HashGeneratorImpl implements HashGenerator {
      * @param bits - Can only be 224, 256, 384 or 512 as per SHA3 definition
      * @return
      */
-    //@Override
+    @Override
     public byte[] generate(final String string, final int bits) {
         Objects.requireNonNull(string, "String to digest cannot be null!");
 
@@ -54,7 +55,7 @@ public class HashGeneratorImpl implements HashGenerator {
      * @param bits - Can only be 224, 256, 384 or 512 as per SHA3 definition
      * @return
      */
-    //@Override
+    @Override
     public byte[] generate(final byte[] bytes, final int bits){
         Objects.requireNonNull(bytes, "bytes to digest cannot be null!");
 
@@ -65,11 +66,15 @@ public class HashGeneratorImpl implements HashGenerator {
         return digest;
     }
 
-    //@Override
+    /**
+     * Makes a Sha3-512 bit hash but only returns a part of it with the length "bits".
+     * @param bytes
+     * @param bits
+     * @return
+     */
+    @Override
     public byte[] hashToBits(final byte[] bytes, final int bits){
         Objects.requireNonNull(bytes, "bytes cannot be null");
-        //Required.isTrue(bits > 0 && bits <= 512, "bits need to be 0 > 512");
-        //Required.isTrue(512 % bits == 0, "bits need to be a multiple of 8");
 
         byte[] newBytes = this.generate(bytes, 512);
 
