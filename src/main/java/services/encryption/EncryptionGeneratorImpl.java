@@ -8,29 +8,24 @@ import javax.crypto.spec.SecretKeySpec;
 import java.util.Objects;
 
 /**
- * Created by Michael on 2016-02-12.
+ * Created by Michael on 2016-04-01.
  */
 public class EncryptionGeneratorImpl implements EncryptionGenerator{
 
-    //private static final Logger LOGGER = LoggerFactory.getLogger(EncryptionGeneratorImpl.class.getPackage().getName());
-    private static final int MESSAGE_LENGTH = 32;
-    private static final int[] allowedKeyLengths = {128, 256, 512, 1024};
-    private static final String hexStringIV = "5B1F50F5A3CB66C51CBC5BE7A99CF31B";
-
-    //private final int keyLength;
+    // Static Initialization Vector. Needed for AES-CBC.
+    private static final String HEX_STRING_IV = "5B1F50F5A3CB66C51CBC5BE7A99CF31B";
 
     @Override
     public byte[] encrypt(final byte[] message, final byte[] symmetricKey) {
         Objects.requireNonNull(message, "Parameter message cannot be null");
         Objects.requireNonNull(symmetricKey, "Parameter symmetricKey cannot be null");
-        //Objects.requireNonNull(symmetricKey.length == (this.keyLength / 8), String.format("Parameter symmetricKey must be of length %d", this.keyLength));
 
         try {
             //Make key
             SecretKeySpec key = createKey(symmetricKey);
 
             //Set IV
-            byte[] initializationVector = Hex.decode(hexStringIV);
+            byte[] initializationVector = Hex.decode(HEX_STRING_IV);
             IvParameterSpec iv = new IvParameterSpec(initializationVector);
 
             //Set the Cipher in encryption mode
@@ -39,8 +34,8 @@ public class EncryptionGeneratorImpl implements EncryptionGenerator{
 
             return cipher.doFinal(message);
         } catch (Exception e) {
-            //LOGGER.error("Failed encrypting the message {0}", new Object[]{message});
-            //LOGGER.error(e.getMessage());
+            System.out.println("Error trying to encrypt. " + e);
+            // Maybe Logger in the future.
         }
         return null;
     }
@@ -50,12 +45,12 @@ public class EncryptionGeneratorImpl implements EncryptionGenerator{
         try {
             Objects.requireNonNull(encrypted, "Parameter encrypted cannot be null");
             Objects.requireNonNull(symmetricKey, "Parameter symmetricKey cannot be null");
-            //Required.isTrue(symmetricKey.length == this.keyLength / 8, String.format("The symmetricKey length is %d but the supported length by the provider is %d ", symmetricKey.length, this.keyLength / 8));
 
+            //Make key
             SecretKeySpec key = createKey(symmetricKey);
 
             //Set Iv
-            byte[] initializationVector = Hex.decode(hexStringIV);
+            byte[] initializationVector = Hex.decode(HEX_STRING_IV);
             IvParameterSpec iv = new IvParameterSpec(initializationVector);
 
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
@@ -63,11 +58,13 @@ public class EncryptionGeneratorImpl implements EncryptionGenerator{
 
             return cipher.doFinal(encrypted);
         } catch (Exception e) {
-            //LOGGER.error("Failed decrypting the message", e);
+            System.out.println("Error trying to decrypt. " + e);
+            // Maybe Logger in the future.
         }
         return null;
     }
 
+    // Method to create key.
     private SecretKeySpec createKey(final byte[] symmetricKey) {
         return new SecretKeySpec(symmetricKey, "AES");
     }
