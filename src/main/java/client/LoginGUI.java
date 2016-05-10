@@ -12,31 +12,34 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 /**
+ * The LoginGUI for the application.
  * Created by Michael on 2016-05-03.
  */
 public class LoginGUI {
-
+    // The main GUI that starts this one.
     SecureChatUI secureChatUI;
 
+    // Constructor
     public LoginGUI(SecureChatUI secureChatUI){
         this.secureChatUI = secureChatUI;
     }
 
+    // Starts the LoginGUI.
     public void start(){
-
+        // Create primaryStage, Scene and set title.
         Stage primaryStage = new Stage();
         Scene scene = new Scene(new Group());
         primaryStage.setTitle("Login");
 
+        // HBox and GridPane
         HBox hb = new HBox();
-        //hb.setPadding(new Insets(20,20,20,20));
-
         GridPane gridPane = new GridPane();
         gridPane.getStyleClass().add("gridPane");
         gridPane.setPadding(new Insets(20,20,20,20));
         gridPane.setHgap(5);
         gridPane.setVgap(5);
 
+        // Labels, textFields etc for login values.
         Label lblAlias = new Label("Alias");
         final TextField txtAlias = new TextField();
         txtAlias.getStyleClass().add("textField");
@@ -57,6 +60,7 @@ public class LoginGUI {
         loginButton.setDefaultButton(true);
         loginButton.getStyleClass().add("loginButton");
 
+        // Add to the GridPane.
         gridPane.add(lblAlias, 0, 0);
         gridPane.add(txtAlias, 1, 0);
         gridPane.add(lblServerIp, 0, 1);
@@ -67,29 +71,34 @@ public class LoginGUI {
         gridPane.add(passwordField, 1, 3);
         gridPane.add(loginButton, 1, 4);
 
+        // Handles the login button event.
         loginButton.setOnAction((event) ->{
+            // Try to login. If it works then close the LoginGUI.
             try{
                 this.secureChatUI.login(txtAlias.getText(), txtServerIp.getText(), Integer.parseInt(txtPort.getText()), passwordField.getText());
                 this.secureChatUI.setLoginGUI(null);
                 primaryStage.close();
+            // If not all fields are input correctly then login fails with this message.
             }catch(Exception e) {
                 this.secureChatUI.append("Login failed. All fields need to be input correctly.");
             }
         });
 
+        // Handles the close primaryStage event.
         primaryStage.setOnCloseRequest(event -> {
             this.secureChatUI.setLoginGUI(null);
             primaryStage.close();
         });
 
+        // Add children to the Scene.
         hb.getChildren().addAll(gridPane);
-
         ((Group) scene.getRoot()).getChildren().addAll(hb);
-
         primaryStage.setScene(scene);
 
+        // Adds CSS to the Scene.
         scene.getStylesheets().add("myCSS.css");
 
+        // Show LoginGUI.
         primaryStage.show();
     }
 }
