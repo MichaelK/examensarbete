@@ -7,10 +7,15 @@ import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
 /**
- * Created by mickal on 05/02/2016.
+ * Created by mickal on 01/04/2016.
  */
 public class CompressionGeneratorImpl implements CompressionGenerator {
 
+    /**
+     * Compress a byte array. See "docs.oracle.com" and class "Deflater" for more information.
+     * @param data
+     * @return
+     */
     @Override
     public byte[] compress(byte[] data){
         Deflater deflater = new Deflater();
@@ -25,13 +30,17 @@ public class CompressionGeneratorImpl implements CompressionGenerator {
         try{
             outputStream.close();
         }catch(IOException ioe){
-            //LOGGER.error("Failed to close outputStream {0}", outputStream);
-            //LOGGER.error(ioe.getMessage());
+            System.out.println("Error trying to compress. " + ioe);
         }
         byte[] output = outputStream.toByteArray();
         return output;
     }
 
+    /**
+     * Decompress a byte array. See "docs.oracle.com" and class "Inflater" for more information.
+     * @param data
+     * @return
+     */
     @Override
     public byte[] decompress(byte[] data){
         Inflater inflater = new Inflater();
@@ -43,15 +52,13 @@ public class CompressionGeneratorImpl implements CompressionGenerator {
                 int count = inflater.inflate(buffer);
                 outputStream.write(buffer, 0, count);
             }catch(DataFormatException dfe){
-                //LOGGER.error("Failed to inflate data to buffer {0}", inflater);
-                //LOGGER.error(dfe.getMessage());
+                System.out.println("Error trying to compress. " + dfe);
             }
         }
         try{
             outputStream.close();
         }catch(IOException ioe){
-            //LOGGER.error("Failed close outputStream {0}", outputStream);
-            //LOGGER.error(ioe.getMessage());
+            System.out.println("Error trying to decompress. " + ioe);
         }
         byte[] output = outputStream.toByteArray();
         return output;
