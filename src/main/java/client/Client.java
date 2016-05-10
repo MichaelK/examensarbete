@@ -8,31 +8,34 @@ import services.hash.HashGeneratorImpl;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ConnectException;
 import java.net.Socket;
 
 /**
- * Created by Michael on 2016-02-27.
+ * Created by Michael on 2016-04-01.
  */
 public class Client {
 
-    private ObjectInputStream sInput;       // to read from the socket
-    private ObjectOutputStream sOutput;     // to write on the socket
+    // The ObjectInputStream.
+    private ObjectInputStream sInput;
+    // The ObjectOutputStream.
+    private ObjectOutputStream sOutput;
+    // The clients socket.
     private Socket socket;
-
+    // The main GUI for this client.
     private SecureChatUI secureChatUI;
-
-    // the server, the port and the username
+    // The server this client is using.
     private String server;
-
+    // The username of the client.
     private String username;
+    // The port the server is using.
     private int port;
+    // The symmetric key that encrypts ChatMessages between clients.
     private byte[] symmetricKey;
 
     private DatapackageGenerator datapackageGenerator;
     private HashGenerator hashGenerator;
 
-
+    // Constructor
     public Client(String server, int port, String username, String password, SecureChatUI secureChatUI) {
         this.server = server;
         this.port = port;
@@ -43,82 +46,86 @@ public class Client {
         this.symmetricKey = createSymmetricKey(password);
     }
 
+    // Starts the client. Creates a socket, output and input stream, and starts the serverlistener.
     public boolean start() {
-        // try to connect to the server
+        // Try to connect to the server on the port.
         try {
             socket = new Socket(server, port);
         }
         catch(Exception e) {
-            display("Error connecting to server:" + e);
+            appendToChatroom("Error connecting to server:" + e);
             return false;
         }
+        // If creating socket succeeds then append this to the chatroom.
         String msg = "Connection accepted " + socket.getInetAddress() + ":" + socket.getPort();
-        System.out.println(msg);
-        display(msg);
-        // Creating both Data Stream
+        appendToChatroom(msg);
+        // Try creating ObjectOutputStream and ObjectInputStream.
         try
         {
+            // OutputStream first to avoid problems.
             sOutput = new ObjectOutputStream(socket.getOutputStream());
             sInput  = new ObjectInputStream(socket.getInputStream());
         }
         catch (IOException e) {
-            display("Exception creating new Input/output Streams: " + e);
+            appendToChatroom("Exception creating new Input/output Streams: " + e);
             return false;
         }
-
-        // creates the Thread to listen from the server
+        // Creates the Thread to listen from the server
         new ServerListener().start();
-        // Send our username to the server this is the only message that we
-        // will send as a String. All other messages will be ChatMessage objects
+        // Send the username to the server.
         try
         {
             sOutput.writeObject(username);
         }
         catch (IOException e) {
-            display("Exception doing login : " + e);
+            appendToChatroom("Exception doing login : " + e);
             return false;
         }
-        // success we inform the caller that it worked
+        // It worked.
         return true;
     }
 
-    // Create a symmetricKey from the password
+    // Create a symmetricKey from the password by hashing the password.
     private byte[] createSymmetricKey(String password){
         return hashGenerator.generate(password, 256);
     }
 
 
-    // To send a message to the console or the GUI
-    private void display(String msg) {
-        // append to the ClientGUI TextArea
+    // To send a message to the main GUI.
+    private void appendToChatroom(String msg) {
         secureChatUI.append(msg);
     }
 
 
-    // To send a message to the server
+    // Sends one of three different ChatMessages to the server.
     void sendMessage(ChatMessage chatmsg) {
         ChatMessage chatMessage = chatmsg;
         String message = chatMessage.getMessage();
         switch(chatmsg.getType()){
+            // This message is always sent between clients to chat.
             case ChatMessage.MESSAGE:
                 String generateMsg = datapackageGenerator.generateDatapackage(message, symmetricKey);
                 chatMessage.setMessage(generateMsg);
                 break;
+            // This is only sent to the server to disconnect a client.
             case ChatMessage.LOGOUT:
                 chatMessage.setMessage(message);
                 break;
+            // This is sent to retrieve which users are in the chat at this time.
             case ChatMessage.LOBBY:
                 chatMessage.setMessage(message);
                 break;
         }
+        // Try and write the message to the ObjectOutputStream.
         try {
             sOutput.writeObject(chatMessage);
         }
         catch(IOException e) {
-            display("Exception sending message to server: " + e);
+            appendToChatroom("Exception sending message to server: " + e);
         }
     }
 
+    // Try and disconnect the socket and close the streams.
     void disconnect() {
         try {
             if(sInput != null) sInput.close();
@@ -138,37 +145,45 @@ public class Client {
         return this.secureChatUI;
     }
 
-    /*
-     * a class that waits for the message from the server and append them to the TextArea
-     * if we have a GUI or simply System.out.println() it in console mode
+    /**
+     * This class listens for incoming objects. If it is a ChatMessage the message part is opened with the DatapackageGenerator class.
+     * If it is a String then it is appended to the LobbyGUI.
      */
     class ServerListener extends Thread {
-
+        // Boolean to keep the thread running.
         Boolean keepRunning = true;
         public void run() {
             while(keepRunning) {
+                // Try and read the incoming object.
                 try {
                     Object obj = sInput.readObject();
+                    // If the object is a ChatMessage.
                     if (obj.getClass().equals(ChatMessage.class)){
                         ChatMessage chatMessage = (ChatMessage) obj;
                         String msg = chatMessage.getMessage();
                         String openMsg;
+                        // Try to open the datapackage and append it to the chatroom.
                         try {
                             openMsg = datapackageGenerator.openDatapackage(msg, symmetricKey);
                             secureChatUI.append(chatMessage.getSender() + " : " + openMsg);
                         }catch (Exception e){
+                            // If the message can not be opened. Probably different passwords used.
                             secureChatUI.append(chatMessage.getSender() + " : " + "Message could not be decrypted. Check password.");
                         }
+                    // If it is a String meant for the LobbyGUI.
                     }else if (obj.getClass().equals(String.class)){
                         String msg = (String) obj;
                         secureChatUI.getLobbyGUI().appendToLobby(msg);
                     }
                 }
+                // If a connection has not been established to the server or has been disconnected.
                 catch(IOException e) {
-                    display("No connection to the server established. " + e);
+                    appendToChatroom("No connection to the server established. " + e);
                     keepRunning = false;
+                    // Reset the connect button to show that you need to connect.
                     getSecureChatUI().resetConnectButton();
                 }
+                // will probably never happen.
                 catch(ClassNotFoundException e) {
                     System.out.println("ClassNotFoundException i ServerListener!");
                     keepRunning = false;
