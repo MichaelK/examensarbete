@@ -24,6 +24,7 @@ public class Client {
 
     // the server, the port and the username
     private String server;
+
     private String username;
     private int port;
     private byte[] symmetricKey;
@@ -32,7 +33,7 @@ public class Client {
     private HashGenerator hashGenerator;
 
 
-    Client(String server, int port, String username, String password, SecureChatUI secureChatUI) {
+    public Client(String server, int port, String username, String password, SecureChatUI secureChatUI) {
         this.server = server;
         this.port = port;
         this.username = username;
@@ -51,11 +52,9 @@ public class Client {
             display("Error connecting to server:" + e);
             return false;
         }
-
         String msg = "Connection accepted " + socket.getInetAddress() + ":" + socket.getPort();
         System.out.println(msg);
         display(msg);
-
         // Creating both Data Stream
         try
         {
@@ -176,5 +175,45 @@ public class Client {
                 }
             }
         }
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
+
+    public String getServer() {
+        return server;
+    }
+
+    public void setServer(String server) {
+        this.server = server;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public byte[] getSymmetricKey() {
+        return symmetricKey;
+    }
+
+    public void setSymmetricKey(byte[] symmetricKey) {
+        this.symmetricKey = symmetricKey;
     }
 }

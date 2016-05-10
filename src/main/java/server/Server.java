@@ -25,7 +25,7 @@ public class Server {
     // An ArrayList that holds all connection threads.
     private ArrayList<ClientThread> clientThreads = new ArrayList<>();
 
-    // to appendEvent time
+    // To format date/time of events.
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
 
     // The GUI that corresponds to this server.
@@ -84,7 +84,6 @@ public class Server {
         thread.start();
     }
 
-
     // Append an event in the eventlog of the serverGUI.
     private void appendEvent(String msg) {
         String time = simpleDateFormat.format(new Date()) + " " + msg;
@@ -102,6 +101,7 @@ public class Server {
         // Try and stop ServerSocket and close streams.
         try{
             serverSocket.close();
+            // Go through the clientThreads ArrayList and close sockets and streams.
             for (int i = 0; i < clientThreads.size(); i++) {
                 ClientThread clientThread = clientThreads.get(i);
                 try {
@@ -128,7 +128,7 @@ public class Server {
         for (int i = 0; i < clientThreads.size(); i++) {
             ClientThread clientThread = clientThreads.get(i);
             // If message can not be sent then remove the connection and append event.
-            if (!clientThread.writeMsg(chatMessage)) {
+            if (!clientThread.sendMessage(chatMessage)) {
                 clientThreads.remove(i);
                 appendEvent(clientThread.username + " has disconnected from the chat!");
             }
@@ -139,9 +139,9 @@ public class Server {
     synchronized void remove(int id) {
         // Search the ArrayList for Id.
         for (int i = 0; i < clientThreads.size(); ++i) {
-            ClientThread ct = clientThreads.get(i);
+            ClientThread clientThread = clientThreads.get(i);
             // Remove the corresponding thread.
-            if (ct.id == id) {
+            if (clientThread.idClientThread == id) {
                 clientThreads.remove(i);
                 return;
             }
@@ -149,15 +149,16 @@ public class Server {
     }
 
     // One instance of this thread will run for each client.
-    class ClientThread extends Thread {
+    public class ClientThread extends Thread {
         // The socket that connects to the ServerSocket.
         Socket socket;
+
         // The ObjectInputStream.
         ObjectInputStream sInput;
         // The ObjectOutpulStream.
         ObjectOutputStream sOutput;
         // Each connection has an unique Id.
-        int id;
+        int idClientThread;
         // The username of the client.
         String username;
         // The object sent to the Server from clients.
@@ -168,12 +169,12 @@ public class Server {
         // Constructor
         ClientThread(Socket socket) {
             // Get a unique Id to the connection.
-            id = ++uniqueId;
+            idClientThread = ++uniqueId;
             // The socket connecting.
             this.socket = socket;
             // Create streams.
             try{
-                // Must create output sream first or might be problems.
+                // Must create output stream first or might be problems.
                 sOutput = new ObjectOutputStream(socket.getOutputStream());
                 sInput = new ObjectInputStream(socket.getInputStream());
                 // Read the username.
@@ -227,16 +228,16 @@ public class Server {
                     // ChatMessage to see who is connected to the same port. Show users in the LobbyGUI.
                     case ChatMessage.LOBBY:
                         // Will create a readable list in the LobbyGUI.
-                        writeMsg("List of the users connected at " + simpleDateFormat.format(new Date()));
+                        sendMessage("List of the users connected at " + simpleDateFormat.format(new Date()));
                         for (int i = 0; i < clientThreads.size(); ++i) {
                             ClientThread clientThread = clientThreads.get(i);
-                            writeMsg((i + 1) + ") " + clientThread.username + " since " + clientThread.date);
+                            sendMessage((i + 1) + ") " + clientThread.username + " since " + clientThread.date);
                         }
                         break;
                 }
             }
             // If boolean keepGoing is false then remove the unique connection Id and close the socket and streams.
-            remove(id);
+            remove(idClientThread);
             close();
         }
 
@@ -267,7 +268,7 @@ public class Server {
 
 
         // Write an Object to the Client output stream
-        private boolean writeMsg(Object object) {
+        private boolean sendMessage(Object object) {
             // Try and write to the outputstream.
             try {
                 // If object is ChatMessage then this.
@@ -290,6 +291,14 @@ public class Server {
             // If you gotten this far then return false. Message not sent.
             return false;
         }
+    }
+
+    public ServerSocket getServerSocket() {
+        return serverSocket;
+    }
+
+    public Thread getThread() {
+        return thread;
     }
 }
 
