@@ -27,6 +27,8 @@
 *.sqlite
 
 # OS generated files #
+/.idea
+/SecureChat.iml
 ######################
 .DS_Store
 .DS_Store?
