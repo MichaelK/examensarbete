@@ -2,7 +2,7 @@ package services.checksum;
 
 /**
  * Takes the first 16 bytes of a hash to use as checksum.
- * @author mickal 2016-02-04
+ * @author mickal 2016-04-01
  */
 public interface ChecksumGenerator {
 

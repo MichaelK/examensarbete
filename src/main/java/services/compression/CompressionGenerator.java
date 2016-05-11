@@ -6,14 +6,14 @@ package services.compression;
 public interface CompressionGenerator {
 
     /**
-     *
+     * Compress a byte array.
      * @param data
      * @return
      */
     byte[] compress(byte[] data);
 
     /**
-     *
+     * Decompress a byte array.
      * @param data
      * @return
      */

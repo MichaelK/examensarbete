@@ -16,8 +16,6 @@ public class ChecksumGeneratorImpl implements ChecksumGenerator {
      */
     public String createChecksumAsHex (String hash, int bits){
         Objects.requireNonNull(hash, "hash can't be null");
-        //Required.isTrue(bits > 0 && bits <= 512, "bits out of range");
-        //Required.isTrue(512 % bits == 0, "bits need to be a multiple of 8");
 
         int hexValue = bits / 4;
         StringBuilder sb = new StringBuilder(hash);
@@ -32,8 +30,6 @@ public class ChecksumGeneratorImpl implements ChecksumGenerator {
      */
     public byte[] createChecksumAsByteArray (byte[] hash, int bits){
         Objects.requireNonNull(hash, "hash can't be null");
-        //Required.isTrue(bits > 0 && bits <= 512, "bits out of range");
-        //Required.isTrue(512 % bits == 0, "bits need to be a multiple of 8");
 
         int useBytes = bits / 8;
         byte[] croppedArray = new byte[useBytes];

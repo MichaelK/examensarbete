@@ -17,50 +17,65 @@ import server.ServerGUI;
 
 
 /**
- * Created by Michael on 2016-02-27.
+ * The main GUI that starts the application
+ * Created by Michael on 2016-04-01.
  */
 public class SecureChatUI extends Application{
 
+    // The Client.
     private Client client;
-
+    // These GUIs are all started from the main GUI.
     private ServerGUI serverGUI;
     private LobbyGUI lobbyGUI;
     private LoginGUI loginGUI;
 
+    // The chatroom area.
     private TextArea chatRoom;
+    // The textfield where you enter messages.
     private TextField chatMessage;
 
+    // The button that opens the LoginGUI to login to a server.
     private Button connectButton;
+    // The button that starts the ServerGUI.
     private Button startServerButton;
+    // The button that starts the LobbyGUI.
+    private Button showLobbyButton;
 
+    // GridPane, HBox and VBox.
     final GridPane gridPane = new GridPane();
     final HBox hbBottom = new HBox();
     final HBox hbInput = new HBox();
     final HBox hbTop = new HBox();
-
     final VBox vbox = new VBox();
 
+    // Need to start the application.
     public static void main(String[] args) {
         launch(args);
     }
 
+    // Starts the main GUI.
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        // Creates a Scene and set the title.
         Scene scene = new Scene(new Group());
         primaryStage.setTitle("SecureChat");
-        //primaryStage.setWidth(640);
-        //primaryStage.setHeight(400);
 
+        // The connectbutton that starts LoginGUI for login. And styleclass for this button.
         connectButton = new Button("Connect");
         connectButtonStyleClass();
+
+        // Handles the events when clicking connectbutton.
         connectButton.setOnAction((event) -> {
+            // If buttontext says Connect.
             if(connectButton.getText().equals("Connect")){
                 if(this.loginGUI == null){
                     this.loginGUI = new LoginGUI(this);
                     this.loginGUI.start();
                 }
+            // If buttontext says Logout.
             }else{
+                // Send a logout ChatMessage to server.
                 ChatMessage message = new ChatMessage(2, chatMessage.getText());
                 this.client.sendMessage(message);
                 this.client.disconnect();
@@ -69,21 +84,29 @@ public class SecureChatUI extends Application{
             }
         });
 
+        // Starts the serverGUI and sets styleclass.
         startServerButton = new Button("Start Server");
         startServerButton.getStyleClass().add("startServerButton");
+
+        // Handles event to start serverGUI.
         startServerButton.setOnAction((event) -> {
             serverGUI = new ServerGUI(this);
             serverGUI.start();
         });
 
-        final Button showLobbyButton = new Button("Show Lobby");
+        // Starts the LobbyGUI and sets styleclass.
+        showLobbyButton = new Button("Show Lobby");
         showLobbyButton.getStyleClass().add("showLobbyButton");
+
+        // Handles events to start the lobbyGUI.
         showLobbyButton.setOnAction((event) ->{
             if(this.client != null){
+                // If a LobbyGUI already exists then use that one to update.
                 if(this.lobbyGUI != null){
                     lobbyGUI.clearLobby();
                     ChatMessage message = new ChatMessage(0, chatMessage.getText());
                     this.client.sendMessage(message);
+                // If no LobbyGUI exist then start one and get the lobby.
                 }else{
                     lobbyGUI = new LobbyGUI(this);
                     lobbyGUI.start();
@@ -91,6 +114,7 @@ public class SecureChatUI extends Application{
                     ChatMessage message = new ChatMessage(0, chatMessage.getText());
                     this.client.sendMessage(message);
                 }
+            // If a client is not started then show lobby with this text.
             }else{
                 lobbyGUI = new LobbyGUI(this);
                 lobbyGUI.start();
@@ -98,21 +122,31 @@ public class SecureChatUI extends Application{
             }
         });
 
+        // The sendbutton that sends messages and styleclass.
         final Button sendButton = new Button("Send");
         sendButton.getStyleClass().add("sendButton");
+
+        // Is set as defaultbutton to not have to click mouse to send. Can press enter.
         sendButton.setDefaultButton(true);
+
+        // Handles button to send messages.
         sendButton.setOnAction((event) -> {
+            // If connected.
             if(this.client != null){
+                // As long as it isn't an empty string then send.
                 if(!chatMessage.getText().equals("")){
                     ChatMessage message = new ChatMessage(1, chatMessage.getText());
                     this.client.sendMessage(message);
                 }
+            // If not connected.
             }else{
                 append("Need to connect to a server before sending messages!");
             }
+            // Set the textfield to empty string after a message is sent.
             chatMessage.setText("");
         });
 
+        // Handles events to close the stage. Tries to disconnect the client.
         primaryStage.setOnCloseRequest(event -> {
             if(this.client != null){
                 ChatMessage message = new ChatMessage(2, chatMessage.getText());
@@ -122,19 +156,19 @@ public class SecureChatUI extends Application{
             primaryStage.close();
         });
 
+        // Textfield where you enter message.
         chatMessage = new TextField();
         chatMessage.getStyleClass().add("textField");
         chatMessage.setPromptText("Enter your chatmessage here!");
         chatMessage.setPrefWidth(420);
 
+        // Textarea where all messages are seen.
         chatRoom = new TextArea();
         chatRoom.getStyleClass().add("textArea");
-        //chatRoom.setPromptText("Welcome to the chatroom!");
         chatRoom.setPrefWidth(420);
         chatRoom.setEditable(false);
 
-        //chatRoom.setScrollTop(100);
-
+        // HBox, VBox and GridPane.
         hbBottom.setSpacing(5);
         hbBottom.setPadding(new Insets(25, 0, 0, 0));
         hbBottom.getChildren().addAll(hbInput);
@@ -156,39 +190,47 @@ public class SecureChatUI extends Application{
         gridPane.add(hbBottom, 0, 2);
 
         vbox.setSpacing(5);
-        //vbox.setPadding(new Insets(10, 0, 0, 10));
         vbox.getChildren().addAll(gridPane);
 
+        // Add all children to the root.
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
 
+        // Set the scene to the stage.
         primaryStage.setScene(scene);
 
+        // Add the stylesheet to the scene.
         scene.getStylesheets().add("myCSS.css");
 
+        // Appends the startup text to the chatarea.
         startupText();
 
+        // Show the primaryStage.
         primaryStage.show();
     }
 
+    // Method called from LoginGUI to connect a client to the server.
     void login(String alias, String serverIp, int portNo, String password){
+        // Try creating a new Client with GUI
         try{
-            // try creating a new Client with GUI
             this.client = new Client(serverIp, portNo, alias, password, this);
+            // If successful then change button style and clear chatroom.
             boolean success = this.client.start();
             if (success){
                 connectButton.setText("Logout");
                 connectButtonStyleClass();
                 clearChatroom();
+            // If not successful then set client to null.
             }else{
                 this.client = null;
             }
+        // Show this message in the chatarea if fail to login.
         }catch(Exception e){
             append("Error trying to login. Please input correct information.");
             this.client = null;
         }
     }
 
-    // called by the Client to append text in the TextArea
+    // Called by the Client to append text in the TextArea
     void append(String str) {
 
         Platform.runLater(new Runnable() {
@@ -199,7 +241,8 @@ public class SecureChatUI extends Application{
         });
     }
 
-    void startupText(){
+    // The startup text that is shown in the textarea.
+    private void startupText(){
         append("Welcome to the chatroom!\n\n" +
                 "1) Start a new server if you are going to be the host.\n" +
                 "2) Connect to a known server if you are not the host.\n" +
@@ -207,10 +250,12 @@ public class SecureChatUI extends Application{
                 "4) The more complex a password the better the security is!\n");
     }
 
+    // Clear the chatarea.
     void clearChatroom(){
         chatRoom.clear();
     }
 
+    // Sets the style for the connectButton depending on being logged in or not.
     void connectButtonStyleClass(){
         connectButton.getStyleClass().clear();
         connectButton.getStyleClass().add("button");
@@ -221,7 +266,7 @@ public class SecureChatUI extends Application{
         }
     }
 
-
+    // Method to reset the connectButton if Server shuts down unexpectedly.
     void resetConnectButton(){
 
         Platform.runLater(new Runnable() {
@@ -234,6 +279,7 @@ public class SecureChatUI extends Application{
         });
     }
 
+    // Getters and setters.
     public LobbyGUI getLobbyGUI() {
         return lobbyGUI;
     }
