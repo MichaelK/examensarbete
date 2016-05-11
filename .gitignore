@@ -38,6 +38,7 @@ Thumbs.db
 
 .classpath
 .project
+/.idea
 .settings/
 target/
 ssh laptop
