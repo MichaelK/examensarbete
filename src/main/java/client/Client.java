@@ -31,6 +31,8 @@ public class Client {
     private int port;
     // The symmetric key that encrypts ChatMessages between clients.
     private byte[] symmetricKey;
+    // The Class that listens for incoming streams.
+    private ServerListener serverListener;
 
     private DatapackageGenerator datapackageGenerator;
     private HashGenerator hashGenerator;
@@ -71,7 +73,8 @@ public class Client {
             return false;
         }
         // Creates the Thread to listen from the server
-        new ServerListener().start();
+        serverListener = new ServerListener();
+        serverListener.start();
         // Send the username to the server.
         try
         {
@@ -86,7 +89,7 @@ public class Client {
     }
 
     // Create a symmetricKey from the password by hashing the password.
-    private byte[] createSymmetricKey(String password){
+    public byte[] createSymmetricKey(String password){
         return hashGenerator.generate(password, 256);
     }
 
@@ -98,7 +101,7 @@ public class Client {
 
 
     // Sends one of three different ChatMessages to the server.
-    void sendMessage(ChatMessage chatmsg) {
+    public void sendMessage(ChatMessage chatmsg) {
         ChatMessage chatMessage = chatmsg;
         String message = chatMessage.getMessage();
         switch(chatmsg.getType()){
@@ -126,7 +129,7 @@ public class Client {
     }
 
     // Try and disconnect the socket and close the streams.
-    void disconnect() {
+    public void disconnect() {
         try {
             if(sInput != null) sInput.close();
         }
@@ -192,6 +195,7 @@ public class Client {
         }
     }
 
+    // Getters adn setters
     public Socket getSocket() {
         return socket;
     }
@@ -231,4 +235,16 @@ public class Client {
     public void setSymmetricKey(byte[] symmetricKey) {
         this.symmetricKey = symmetricKey;
     }
+
+    public ObjectInputStream getsInput() {return sInput;}
+
+    public void setsInput(ObjectInputStream sInput) {this.sInput = sInput;}
+
+    public ObjectOutputStream getsOutput() {return sOutput;}
+
+    public void setsOutput(ObjectOutputStream sOutput) {this.sOutput = sOutput;}
+
+    public ServerListener getServerListener() {return serverListener;}
+
+    public void setServerListener(ServerListener serverListener) {this.serverListener = serverListener;}
 }

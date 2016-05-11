@@ -17,7 +17,7 @@ import server.ServerGUI;
 
 
 /**
- * The main GUI that starts the applikation
+ * The main GUI that starts the application
  * Created by Michael on 2016-04-01.
  */
 public class SecureChatUI extends Application{

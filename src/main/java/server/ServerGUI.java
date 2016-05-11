@@ -59,7 +59,7 @@ public class ServerGUI {
         Scene scene = new Scene(new Group());
         primaryStage.setTitle("Server");
 
-        // Label, textfield, style etc for the port.
+        // Label, textfield, style for the port.
         portNo = new TextField();
         portNo.getStyleClass().add("textField");
         Label portLabel = new Label("Port Number:");

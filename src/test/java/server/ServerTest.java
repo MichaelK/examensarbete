@@ -6,8 +6,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
-
 /**
  * Created by Michael on 2016-05-07.
  */
@@ -16,6 +14,8 @@ public class ServerTest {
     private int port = 6789;
     private Server server;
     private Client client;
+
+    // Create mocks
     private ServerGUI mockServerGUI = Mockito.mock(ServerGUI.class);
     private SecureChatUI mockSecureChatUI = Mockito.mock(SecureChatUI.class);
 
@@ -29,8 +29,7 @@ public class ServerTest {
 
         // Create a client.
         client = new Client("localhost", port, "Michael", "password", mockSecureChatUI);
-
-        // Start a client.
+        // Start the client.
         client.start();
 
         // Assert that socket and thread is created.
